@@ -135,6 +135,24 @@ export interface Patient {
   record_requests?: RecordRequest[];
   consents?: Consent[];
   consent_log?: ConsentEvent[];
+  emergency?: EmergencyCard;
+}
+
+/**
+ * What a stranger sees after scanning the patient's bracelet QR code.
+ * Only these fields are public; the patient chooses them. The link uses a random
+ * token (not the patient ID) and can be regenerated or switched off at any time.
+ */
+export interface EmergencyCard {
+  enabled: boolean;
+  token: string | null;
+  display_name: string;            // e.g. first name only
+  conditions: string[];
+  instructions: Partial<Record<Lang, string>>; // "If you see me…", written by the patient
+  allergies: string[];
+  medications: string[];
+  contacts: { name: string; relation: string; phone: string }[];
+  updated_at: string;
 }
 
 // ---- findings ----

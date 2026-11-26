@@ -50,3 +50,10 @@ export function updatePatient(id: string, change: (p: Patient) => void): Patient
 export function resetDemo() {
   save({});
 }
+
+/** Public emergency page lookup. Only enabled cards with a matching token are found. */
+export function getEmergencyCard(token: string) {
+  if (!token) return null;
+  const p = listPatients().find((x) => x.emergency?.enabled && x.emergency.token === token);
+  return p?.emergency ?? null;
+}

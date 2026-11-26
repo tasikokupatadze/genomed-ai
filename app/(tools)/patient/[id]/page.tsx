@@ -5,6 +5,7 @@ import { getPatient } from "@/lib/store";
 import LabTrendChart from "@/app/components/LabTrendChart";
 import AddMedication from "@/app/components/AddMedication";
 import PatientRecords from "@/app/components/PatientRecords";
+import EmergencyCardEditor from "@/app/components/EmergencyCardEditor";
 import { EntryTag, NoteLine } from "@/app/components/RecordBits";
 import { getEhrConnector } from "@/lib/ehr";
 
@@ -82,6 +83,7 @@ export default async function PatientPage({ params }: PageProps<"/patient/[id]">
       </section>
       <AddMedication patientId={p.id} d={d} />
       <PatientRecords patient={p} clinics={clinics} d={d} />
+      <EmergencyCardEditor patient={p} d={d} />
     </div>
   );
 }

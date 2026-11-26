@@ -8,7 +8,8 @@
       "sex": "F",
       "conditions": [
         "High cholesterol",
-        "High blood pressure"
+        "High blood pressure",
+        "Epilepsy"
       ],
       "medications": [
         {
@@ -89,7 +90,34 @@
           }
         ]
       },
-      "demo": true
+      "demo": true,
+      "emergency": {
+        "enabled": true,
+        "token": "demo-nino-Qm7vX2pLk9",
+        "display_name": "Nino (demo)",
+        "conditions": [
+          "Epilepsy"
+        ],
+        "instructions": {
+          "en": "DEMO TEXT, written by the patient. If I have a seizure: stay with me and keep me away from anything that could hurt me. Put something soft under my head. Do not hold me down and do not put anything in my mouth. When the shaking stops, turn me onto my side. Call 112 if it lasts more than 5 minutes, if another one starts, or if I am injured.",
+          "ka": "სადემონსტრაციო ტექსტი, დაწერილი პაციენტის მიერ. თუ გულყრა დამეწყო: დარჩით ჩემთან და მოაშორეთ ყველაფერი, რამაც შეიძლება დამაზიანოს. თავქვეშ დამიდეთ რამე რბილი. ძალით ნუ დამიჭერთ და პირში არაფერი ჩამიდოთ. როცა კანკალი შეწყდება, გვერდზე დამაწვინეთ. დარეკეთ 112-ზე, თუ გულყრა 5 წუთზე მეტხანს გაგრძელდა, თუ ახალი დაიწყო, ან თუ დაშავებული ვარ."
+        },
+        "allergies": [
+          "Penicillin"
+        ],
+        "medications": [
+          "Atorvastatin",
+          "Furosemide"
+        ],
+        "contacts": [
+          {
+            "name": "Tamar (demo)",
+            "relation": "Mother",
+            "phone": "+995 000 000 000"
+          }
+        ],
+        "updated_at": "2026-11-26T00:00:00Z"
+      }
     },
     {
       "id": "p002",

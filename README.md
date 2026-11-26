@@ -121,3 +121,20 @@ The clinic system is **simulated**: `data/mock_ehr.json` holds fictional FHIR-sh
 - **Duplicates are skipped:** a lab with the same test, date and value; a medication with the same name and start date; the same allergy, condition or procedure.
 - **After import:** checks and charts re-run automatically. Imported records can't be edited; patients can add a note to them.
 - **Revoking access** blocks future syncs, and imported records stay. Every event is in the consent log, shown to patient and doctor.
+
+### Emergency bracelet QR (in `/patient/[id]`)
+
+On their page, the patient fills in an **emergency card** with only what strangers should see:
+- a display name (first name)
+- conditions
+- "what to do" in Georgian and English
+- allergies and key medicines
+- up to 3 emergency contacts
+
+**Create QR code** makes a random link (`/e/<token>`), not the patient ID. The QR can be downloaded as PNG or SVG, or printed at about 30 mm for a bracelet tag.
+
+Scanning opens a public page with a large **Call 112** button, the instructions, one-tap contact calls, and only the chosen fields. The page is never indexed by search engines, and it opens in Georgian unless the phone prefers English.
+
+**New link** kills the old QR code. **Turn page off** hides the page.
+
+The demo card for Nino uses the fixed link `/e/demo-nino-Qm7vX2pLk9`, so a printed test bracelet keeps working after demo resets. A QR created on `localhost` only works on that computer, so create real ones on the deployed site.
