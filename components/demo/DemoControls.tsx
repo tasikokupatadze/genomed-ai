@@ -81,7 +81,10 @@ export default function DemoControls({ s, T }: { s: DemoState; T: Text }) {
           </ul>
           <p className="mt-2">{OUTCOME_TEXT[ev.result.outcome][lang]}</p>
           <p className={`mt-2 rounded p-2 font-bold ${ev.reviewId ? "bg-emerald-100 text-emerald-900" : "bg-slate-100 text-slate-800"}`}>
-            {ev.reviewId ? (ev.duplicate ? `${T.existingReview}: ${ev.reviewId}` : `✓ ${T.reviewOpened}: ${ev.reviewId}`) : `○ ${T.noReview}`}
+            {ev.reviewId
+              ? ev.duplicate ? `${T.existingReview}: ${ev.reviewId}`
+                : ev.autoShared ? `⚙ ${T.autoSharedResult}: ${ev.reviewId}` : `✓ ${T.reviewOpened}: ${ev.reviewId}`
+              : `○ ${T.noReview}`}
           </p>
           {evReview && (
             <div className="mt-2 flex flex-wrap items-center gap-2">

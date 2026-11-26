@@ -160,3 +160,10 @@ Question: *how well do Evo 2's predictions agree with expert classifications?*
 
 The Research tab shows "Benchmark not yet run" until a real `results.json` exists. Research scores never reach patients.
 
+
+### Standing approval (automatic sharing of low-risk changes)
+
+In the **Clinician** view, the **Standing instruction** panel lets the doctor decide once, per patient, to share reclassifications from *uncertain* to *likely benign / benign* automatically, with a chosen follow-up line.
+- With it on, demo update 4 is shared at once using the prepared Georgian and English message. It's labelled "Shared automatically" for the doctor, and as "sent under your doctor's standing instruction" for the patient.
+- Every other change still waits for the doctor. Demo update 5 (*uncertain → likely pathogenic*, from a second source) always opens a normal review.
+- The rule lives in `lib/demo/standing.ts` (`isLowRiskChange`).

@@ -12,7 +12,7 @@ let clock = 0;
 const run = (s: DemoState, ...actions: Action[]) =>
   actions.reduce((st, a) => reduce(st, a, new Date(Date.UTC(2026, 10, 26, 12, 0, clock++)).toISOString()), s);
 const upd = (id: string): Action => ({ type: "processUpdate", updateId: id });
-const [A, B, C, D] = EVIDENCE_UPDATES.map((u) => u.id);
+const [A, B, C, D, E] = EVIDENCE_UPDATES.map((u) => u.id);
 
 test("normalisation", () => {
   assert.equal(normalizeId(" syn var 000117 "), "SYN-VAR-000117");
@@ -31,7 +31,8 @@ test("four update outcomes", () => {
   assert.ok(r[1].variantMatch && !r[1].conditionMatch);
   assert.equal(r[2].outcome, "same_interpretation");
   assert.equal(r[3].outcome, "changed_interpretation");
-  assert.deepEqual(r.map((x) => x.opensReview), [false, false, false, true]);
+  assert.deepEqual(r.map((x) => x.opensReview), [false, false, false, true, true]);
+  assert.equal(r[4].newClassification, "likely_pathogenic");
   assert.deepEqual(r[3].differences, ["classification"]);
 });
 
@@ -134,4 +135,37 @@ test("dates are formatted without relying on browser locale data", async () => {
   const { formatDate } = await import("./i18n.ts");
   assert.equal(formatDate("2026-10-21", "ka"), "21 ოქტომბერი, 2026");
   assert.equal(formatDate("2026-03-14", "en"), "14 March 2026");
+});
+
+test("standing approval: low-risk change is shared automatically, a serious one never is", () => {
+  let s = run(initialState(), { type: "setStanding", patientId: "pt-nino", enabled: true, followUp: "not_needed" });
+  s = run(s, upd(D)); // uncertain -> likely benign
+  assert.equal(s.reviews[0].status, "approved");
+  assert.equal(s.reviews[0].autoShared, true);
+  assert.equal(patientMessages(s, "pt-nino").length, 1);
+  const m = s.messages[0];
+  assert.ok(m.autoShared?.standingSetAt);
+  assert.equal(m.followUp, "not_needed");
+  assert.ok(m.texts.en && m.texts.ka, "both seeded languages are shared");
+  s = run(s, upd(E)); // uncertain -> likely pathogenic
+  assert.equal(s.reviews[1].status, "pending", "serious change waits for the doctor");
+  assert.equal(patientMessages(s, "pt-nino").length, 1);
+  s = run(s, upd(D));
+  assert.equal(s.messages.length, 1, "replay still creates nothing");
+});
+
+test("standing approval off: everything waits for review", () => {
+  let s = run(initialState(), { type: "setStanding", patientId: "pt-nino", enabled: false, followUp: "not_needed" });
+  s = run(s, upd(D));
+  assert.equal(s.reviews[0].status, "pending");
+  assert.equal(s.messages.length, 0);
+});
+
+test("low-risk rule", async () => {
+  const { isLowRiskChange } = await import("./standing.ts");
+  assert.equal(isLowRiskChange("vus", "likely_benign"), true);
+  assert.equal(isLowRiskChange("vus", "benign"), true);
+  assert.equal(isLowRiskChange("vus", "likely_pathogenic"), false);
+  assert.equal(isLowRiskChange("likely_benign", "benign"), false);
+  assert.equal(isLowRiskChange("pathogenic", "vus"), false);
 });

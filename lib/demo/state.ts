@@ -2,6 +2,7 @@
 import { evaluateBiotinAnswer } from "./biotin.ts";
 import { EVIDENCE_UPDATES, GENETIC_REPORT, LAB_REPORT, seedBiotinDraft, seedGeneticDraft } from "./fixtures.ts";
 import { matchUpdate, updateFingerprint } from "./matching.ts";
+import { isLowRiskChange } from "./standing.ts";
 import type {
   BiotinAnswer, DemoState, FollowUp, Lang, PatientId, PublishedMessage, Review, Role,
 } from "./types.ts";
@@ -36,6 +37,7 @@ export type Action =
   | { type: "approve"; reviewId: string }
   | { type: "dismiss"; reviewId: string; reason: string }
   | { type: "answerBiotin"; answer: BiotinAnswer }
+  | { type: "setStanding"; patientId: PatientId; enabled: boolean; followUp: FollowUp }
   | { type: "reset" };
 
 const other = (l: Lang): Lang => (l === "en" ? "ka" : "en");
@@ -101,6 +103,7 @@ export function reduce(state: DemoState, action: Action, now: string): DemoState
         }
         const result = matchUpdate(report, update);
         let reviewId: string | null = null;
+        let autoShared = false;
         if (result.opensReview) {
           [s, reviewId] = nextId(s, "REV");
           const seed = seedGeneticDraft(report, update);
@@ -111,6 +114,23 @@ export function reduce(state: DemoState, action: Action, now: string): DemoState
             followUp: null,
           };
           s = { ...s, reviews: [...s.reviews, review] };
+          // Standing approval: low-risk changes are shared straight away with the prepared
+          // bilingual message; everything else stays pending for the doctor.
+          const standing = s.standing?.[report.patientId];
+          if (standing?.enabled && isLowRiskChange(result.previousClassification, result.newClassification)) {
+            let messageId: string;
+            [s, messageId] = nextId(s, "MSG");
+            s = {
+              ...s,
+              messages: [...s.messages, {
+                id: messageId, reviewId, patientId: report.patientId, kind: "genetic", sharedAt: now,
+                texts: { en: seed.en, ka: seed.ka }, followUp: standing.followUp,
+                basedOn: { reportId: report.id, updateId: update.id }, autoShared: { standingSetAt: standing.setAt },
+              }],
+            };
+            s = updateReview(s, reviewId, (r) => ({ ...r, status: "approved", decidedAt: now, messageId, followUp: standing.followUp, autoShared: true }));
+            autoShared = true;
+          }
         }
         s = {
           ...s,
@@ -118,11 +138,17 @@ export function reduce(state: DemoState, action: Action, now: string): DemoState
             fingerprint: fp, updateId: update.id, reportId: report.id,
             firstProcessedAt: now, lastReceivedAt: now, timesReceived: 1, result, reviewId,
           }],
-          lastEvent: { kind: "genetic", updateId: update.id, reportId: report.id, duplicate: false, result, reviewId, at: now },
+          lastEvent: { kind: "genetic", updateId: update.id, reportId: report.id, duplicate: false, result, reviewId, autoShared, at: now },
         };
       }
       return s;
     }
+
+    case "setStanding":
+      return {
+        ...s,
+        standing: { ...s.standing, [action.patientId]: { enabled: action.enabled, followUp: action.followUp, setAt: now } },
+      };
 
     case "editDraft":
       // One call = one committed edit (the UI commits when the text box loses focus).

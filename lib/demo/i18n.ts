@@ -317,6 +317,18 @@ const en = {
   researchRunIt: "How to run it: research/run_benchmark.ipynb in Google Colab, with your own NVIDIA API key.",
   researchCallDisruptive: "leans disruptive",
   researchCallTolerated: "leans tolerated",
+  standingTitle: "Standing instruction",
+  standingHint: "Set once per patient. Saves you contacting the patient for good news with nothing to act on.",
+  standingToggle: "Automatically share reclassifications from uncertain to likely benign or benign",
+  standingFollowUp: "Follow-up to include in those messages",
+  standingSave: "Save instruction",
+  standingActive: "Active since",
+  standingOff: "Off: every change waits for your review.",
+  standingSafety: "Changes toward pathogenic, and every other change, always wait for your review.",
+  autoSharedTag: "Shared automatically",
+  autoSharedPatient: "Sent automatically under your doctor's standing instruction (set {date}). Your doctor can see this message and will contact you if anything else is needed.",
+  autoSharedResult: "Shared with the patient automatically under the doctor's standing approval",
+  autoSharedReview: "No manual review: this low-risk change matched the standing instruction set on {date}.",
 };
 
 const ka: typeof en = {
@@ -515,6 +527,18 @@ const ka: typeof en = {
   researchRunIt: "როგორ გავუშვათ: research/run_benchmark.ipynb Google Colab-ში, თქვენი NVIDIA API გასაღებით.",
   researchCallDisruptive: "მიდრეკილია დამაზიანებლისკენ",
   researchCallTolerated: "მიდრეკილია უვნებლისკენ",
+  standingTitle: "მუდმივი მითითება",
+  standingHint: "დაყენდება ერთხელ, თითო პაციენტზე. აღარ მოგიწევთ პაციენტთან დაკავშირება კარგი ამბისთვის, რომელიც მოქმედებას არ საჭიროებს.",
+  standingToggle: "ავტომატურად გაუზიარე რეკლასიფიკაცია გაურკვევლიდან სავარაუდოდ კეთილთვისებიანზე ან კეთილთვისებიანზე",
+  standingFollowUp: "რეკომენდაცია, რომელიც ამ შეტყობინებებს დაერთვება",
+  standingSave: "მითითების შენახვა",
+  standingActive: "აქტიურია",
+  standingOff: "გამორთულია: ყველა ცვლილება თქვენს განხილვას ელოდება.",
+  standingSafety: "ცვლილებები პათოგენურისკენ და ყველა სხვა ცვლილება ყოველთვის თქვენს განხილვას ელოდება.",
+  autoSharedTag: "გაზიარდა ავტომატურად",
+  autoSharedPatient: "გამოიგზავნა ავტომატურად, თქვენი ექიმის მუდმივი მითითების საფუძველზე ({date}). ექიმი ხედავს ამ შეტყობინებას და დაგიკავშირდებათ, თუ სხვა რამე იქნება საჭირო.",
+  autoSharedResult: "პაციენტს ავტომატურად გაეგზავნა ექიმის მუდმივი თანხმობით",
+  autoSharedReview: "ხელით განხილვის გარეშე: ეს დაბალი რისკის ცვლილება ემთხვევა მუდმივ მითითებას, რომელიც დაყენდა {date}-ს.",
 };
 
 export const TEXT = { en, ka };

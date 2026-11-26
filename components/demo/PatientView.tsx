@@ -42,6 +42,11 @@ function MessageCard({ m, lang, T }: { m: PublishedMessage; lang: Lang; T: Text 
         <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">{T.clinicianRecommendation}</p>
         <p className="mt-0.5 font-semibold">{FOLLOW_UP_TEXT[m.followUp][lang]}</p>
       </div>
+      {m.autoShared && (
+        <p className="mt-2 rounded bg-sky-50 px-2 py-1 text-sm text-sky-950">
+          ⚙ {T.autoSharedPatient.replace("{date}", formatDate(m.autoShared.standingSetAt, lang))}
+        </p>
+      )}
       {m.answerCorrectedAt && (
         <p className="mt-2 rounded bg-slate-100 px-2 py-1 text-sm text-slate-800">
           ↺ {T.answerCorrectedNote} {formatDateTime(m.answerCorrectedAt, lang)}.

@@ -29,12 +29,13 @@ export default function ClinicianView({ s, T }: { s: DemoState; T: Text }) {
                 >
                   <span className="block text-sm font-bold">{r.kind === "genetic" ? T.geneticReview : T.biotinReview}</span>
                   <span className="block text-xs text-slate-600">{PATIENTS[r.patientId].name[lang]} · <Mono>{r.id}</Mono></span>
-                  <span className="mt-1 block"><StatusBadge status={r.status} lang={lang} /></span>
+                  <span className="mt-1 flex flex-wrap gap-1"><StatusBadge status={r.status} lang={lang} />{r.autoShared && <AutoTag T={T} />}</span>
                 </button>
               </li>
             ))}
           </ul>
         </section>
+        <StandingPanel key={s.standing?.["pt-nino"]?.setAt ?? "none"} s={s} T={T} />
         <EvidenceLog s={s} T={T} />
       </div>
       <div>
@@ -72,7 +73,7 @@ function ReviewDetail({ r, s, T }: { r: Review; s: DemoState; T: Text }) {
     <section className={`${card} space-y-5`} aria-labelledby="rev-title">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <h1 id="rev-title" className="text-xl font-bold">{r.kind === "genetic" ? T.geneticReview : T.biotinReview}</h1>
-        <div className="flex items-center gap-2"><DemoTag label={T.demoBadge} /><StatusBadge status={r.status} lang={lang} /></div>
+        <div className="flex flex-wrap items-center gap-2"><DemoTag label={T.demoBadge} /><StatusBadge status={r.status} lang={lang} />{r.autoShared && <AutoTag T={T} />}</div>
       </div>
       <p className="-mt-3 text-sm text-slate-600">{PATIENTS[r.patientId].name[lang]} · <Mono>{r.id}</Mono> · {formatDateTime(r.createdAt, lang)}</p>
 
@@ -279,6 +280,9 @@ function Outcome({ r, s, T }: { r: Review; s: DemoState; T: Text }) {
   return (
     <div className="space-y-2 border-t border-slate-200 pt-4">
       {r.decidedAt && <p className="text-sm text-slate-600">{T.decidedOn}: {formatDateTime(r.decidedAt, lang)}</p>}
+      {r.autoShared && msg?.autoShared && (
+        <p className="rounded bg-sky-50 p-2 text-sm text-sky-950">⚙ {T.autoSharedReview.replace("{date}", formatDateTime(msg.autoShared.standingSetAt, lang))}</p>
+      )}
       {r.status === "dismissed" && <p><span className="font-semibold">{T.dismissedReason}:</span> {r.dismissReason}</p>}
       {r.status === "withdrawn" && <p className="rounded bg-slate-100 p-2">↺ {T.withdrawnNote}</p>}
       {msg && (
@@ -297,5 +301,49 @@ function Outcome({ r, s, T }: { r: Review; s: DemoState; T: Text }) {
         </div>
       )}
     </div>
+  );
+}
+
+function AutoTag({ T }: { T: Text }) {
+  return (
+    <span className="inline-flex items-center gap-1 rounded-full border border-sky-300 bg-sky-50 px-2 py-0.5 text-xs font-semibold text-sky-900">
+      <span aria-hidden>⚙</span>{T.autoSharedTag}
+    </span>
+  );
+}
+
+/** The doctor's one-time instruction for Nino's genetic finding. */
+function StandingPanel({ s, T }: { s: DemoState; T: Text }) {
+  const lang = s.lang;
+  const current = s.standing?.["pt-nino"];
+  const [enabled, setEnabled] = useState(current?.enabled ?? false);
+  const [followUp, setFollowUp] = useState<"recommended" | "not_needed">(current?.followUp ?? "not_needed");
+  const changed = enabled !== (current?.enabled ?? false) || followUp !== (current?.followUp ?? "not_needed");
+  return (
+    <section className={card} aria-labelledby="standing-title">
+      <h2 id="standing-title" className="font-bold">{T.standingTitle}</h2>
+      <p className="text-xs text-slate-600">{PATIENTS["pt-nino"].name[lang]} · {T.standingHint}</p>
+      <label className="mt-2 flex items-start gap-2 text-sm">
+        <input type="checkbox" className="mt-1" checked={enabled} onChange={(e) => setEnabled(e.target.checked)} />
+        <span>{T.standingToggle}</span>
+      </label>
+      <fieldset className="mt-2 text-sm" disabled={!enabled}>
+        <legend className="text-xs font-semibold text-slate-600">{T.standingFollowUp}</legend>
+        {(["not_needed", "recommended"] as const).map((f) => (
+          <label key={f} className="mt-1 flex items-center gap-2">
+            <input type="radio" name="standing-fu" checked={followUp === f} onChange={() => setFollowUp(f)} />
+            {f === "recommended" ? T.followUpYes : T.followUpNo}
+          </label>
+        ))}
+      </fieldset>
+      <p className="mt-2 rounded bg-amber-50 p-2 text-xs text-amber-950">{T.standingSafety}</p>
+      <div className="mt-2 flex flex-wrap items-center gap-2">
+        <button className={btnPrimary} disabled={!changed}
+          onClick={() => dispatch({ type: "setStanding", patientId: "pt-nino", enabled, followUp })}>{T.standingSave}</button>
+        <span className="text-xs text-slate-600">
+          {current?.enabled ? `✓ ${T.standingActive} ${formatDateTime(current.setAt, lang)}` : T.standingOff}
+        </span>
+      </div>
+    </section>
   );
 }

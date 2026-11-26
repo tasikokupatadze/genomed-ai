@@ -123,6 +123,15 @@ export interface Review {
   dismissReason?: string;
   withdrawnReason?: "answer_corrected";
   messageId?: string;
+  /** Shared automatically under the doctor's standing approval (no manual review). */
+  autoShared?: boolean;
+}
+
+/** A doctor's one-time instruction: share low-risk reclassifications for this patient automatically. */
+export interface StandingApproval {
+  enabled: boolean;
+  followUp: FollowUp;
+  setAt: string;
 }
 
 /** What the patient actually sees. Only created by approving a review. */
@@ -136,6 +145,7 @@ export interface PublishedMessage {
   followUp: FollowUp;
   basedOn: { reportId?: string; updateId?: string; labReportId?: string; biotinAnswerId?: string };
   answerCorrectedAt?: string; // the answer it was based on was later corrected
+  autoShared?: { standingSetAt: string }; // sent under a standing approval
 }
 
 export interface ProcessedUpdate {
@@ -150,7 +160,7 @@ export interface ProcessedUpdate {
 }
 
 export type LastEvent =
-  | { kind: "genetic"; updateId: string; reportId: string; duplicate: boolean; result: MatchResult; reviewId: string | null; at: string }
+  | { kind: "genetic"; updateId: string; reportId: string; duplicate: boolean; result: MatchResult; reviewId: string | null; autoShared?: boolean; at: string }
   | { kind: "reset"; at: string };
 
 export interface DemoState {
@@ -165,4 +175,5 @@ export interface DemoState {
   biotinAnswers: BiotinAnswerRecord[];
   lastEvent: LastEvent | null;
   selectedReviewId: string | null;
+  standing?: Partial<Record<PatientId, StandingApproval>>; // optional: older saved states have none
 }

@@ -98,6 +98,22 @@ export const EVIDENCE_UPDATES: EvidenceUpdate[] = [
   },
 ];
 
+// Fifth update: shows that a serious change is never shared automatically, even with a standing approval.
+EVIDENCE_UPDATES.push({
+  id: "EV-DEMO-E",
+  controlTitle: { en: "Same variant and condition, changed interpretation (second source)", ka: "იგივე ვარიანტი და დაავადება, შეცვლილი ინტერპრეტაცია (მეორე წყარო)" },
+  evidenceDate: "2026-11-12",
+  gene: "GNMD1",
+  variant: { id: "SYN-VAR-000117", hgvs: "c.1847G>A", transcript: "NM_DEMO001.1" },
+  condition: { id: "SYN-COND-0042", name: GENETIC_REPORT.condition.name },
+  classification: "Likely pathogenic",
+  source: {
+    submitter: "DEMO-CLINICAL-LAB-B",
+    name: { en: "Demo Clinical Lab B (fictional)", ka: "სადემონსტრაციო კლინიკური ლაბორატორია B (გამოგონილი)" },
+    isDemo: true,
+  },
+});
+
 export const LAB_REPORT: LabReport = {
   id: "LR-DEMO-2026-1103",
   patientId: "pt-davit",
