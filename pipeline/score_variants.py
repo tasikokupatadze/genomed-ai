@@ -89,7 +89,12 @@ def left_context(chrom_seq: str, pos: int, ref: str) -> str:
 
 
 # ---------- API ----------
-def post(url: str, payload: dict, key: str, retries: int = 5) -> dict:
+def is_warming_up(r) -> bool:
+    """NVIDIA answers HTTP 422 'Instance is restarting' while a hosted model starts up: wait, don't fail."""
+    return r.status_code == 422 and "restarting" in r.text.lower()
+
+
+def post(url: str, payload: dict, key: str, retries: int = 8) -> dict:
     headers = {"Authorization": f"Bearer {key}", "Accept": "application/json", "Content-Type": "application/json"}
     for attempt in range(retries):
         r = requests.post(url, headers=headers, json=payload, timeout=300)
@@ -98,6 +103,11 @@ def post(url: str, payload: dict, key: str, retries: int = 5) -> dict:
             while r.status_code == 202:
                 time.sleep(5)
                 r = requests.get(f"https://api.nvcf.nvidia.com/v2/nvcf/pexec/status/{req_id}", headers=headers, timeout=300)
+        if is_warming_up(r) and attempt < retries - 1:
+            wait = 30 * (attempt + 1)
+            print(f"  Model is starting up ({r.text[:80]}), waiting {wait}s...", file=sys.stderr)
+            time.sleep(wait)
+            continue
         if r.status_code in (429, 500, 502, 503, 504) and attempt < retries - 1:
             wait = int(r.headers.get("Retry-After", 0)) or 2 ** (attempt + 2)
             print(f"  HTTP {r.status_code}, retrying in {wait}s", file=sys.stderr)
