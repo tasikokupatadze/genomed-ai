@@ -55,7 +55,7 @@ Deploying to Vercel: import the GitHub repo, then click Deploy. No environment v
 | English/Georgian UI and seeded bilingual drafts | **Working.** Georgian should still be reviewed by a native speaker |
 | The four evidence updates, both patients, the genetic report and the lab report | **Simulated**: fictional fixtures in `lib/demo/fixtures.ts`. A real system would receive updates from clinical databases such as ClinVar |
 | Saving demo state | **Demo only**: browser `localStorage`, key `genomed-demo-v1`. Role switching has no login |
-| Evo 2 agreement study | **Planned**: benchmark not yet run, no scores exist |
+| Evo 2 agreement study | **Ready to run**: real variant set fixed, scoring + analysis + Colab notebook built; no scores yet |
 
 Research predictions never trigger patient notifications or change a clinical classification.
 
@@ -138,3 +138,25 @@ Scanning opens a public page with a large **Call 112** button, the instructions,
 **New link** kills the old QR code. **Turn page off** hides the page.
 
 The demo card for Nino uses the fixed link `/e/demo-nino-Qm7vX2pLk9`, so a printed test bracelet keeps working after demo resets. A QR created on `localhost` only works on that computer, so create real ones on the deployed site.
+
+### Evo 2 research benchmark
+
+Question: *how well do Evo 2's predictions agree with expert classifications?*
+
+1. **Variant set:** `pipeline/research_variant_set.py` fixes the set **before** any scoring, using real ClinVar data.
+   - 60 harmful and 60 harmless BRCA1 single-letter **missense** variants, all *reviewed by expert panel*, GRCh37.
+   - Seed 2026; split into calibration and test halves.
+   - Output: `data/research/variant_set.csv`.
+2. **Scoring:** `pipeline/score_variants.py` calls NVIDIA's hosted Evo 2.
+   - Default method `next_base`: uses the documented `/generate` endpoint with logits; score = log p(changed letter) − log p(original letter), given the 8,191 letters before the variant.
+   - Optional method `forward`: whole-window likelihood difference.
+   - A one-call `--probe` must pass first, and failed calls leave the score empty.
+   - API facts come from NVIDIA's `bionemo-evo2-nim` skill (github.com/NVIDIA/skills).
+3. **Analysis:** `pipeline/analyze_benchmark.py` writes `data/research/results.json` with:
+   - AUROC with a 95% bootstrap range;
+   - a cut-off chosen on the calibration half only, and agreement on the untouched test half;
+   - every variant listed with its source.
+4. **Run it:** open **`research/run_benchmark.ipynb` in Google Colab** with an `NVIDIA_API_KEY` secret. No GPU needed. Upload the two output files to `data/research/`.
+
+The Research tab shows "Benchmark not yet run" until a real `results.json` exists. Research scores never reach patients.
+

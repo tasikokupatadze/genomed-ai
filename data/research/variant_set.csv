@@ -1,0 +1,121 @@
+variation_id,hgvs_c,hgvs_p,chrom,pos,ref,alt,expert_label,clinical_significance,review_status,last_evaluated,split,source_url
+373826,c.4963T>C,p.Ser1655Pro,17,41222968,A,G,1,Likely pathogenic,reviewed by expert panel,"Aug 18, 2025",calibration,https://www.ncbi.nlm.nih.gov/clinvar/variation/373826/
+54131,c.110C>A,p.Thr37Lys,17,41267767,G,T,1,Pathogenic,reviewed by expert panel,"Aug 10, 2015",calibration,https://www.ncbi.nlm.nih.gov/clinvar/variation/54131/
+55488,c.5258G>C,p.Arg1753Thr,17,41209088,C,G,1,Likely pathogenic,reviewed by expert panel,"Jul 23, 2026",calibration,https://www.ncbi.nlm.nih.gov/clinvar/variation/55488/
+17694,c.5324T>G,p.Met1775Arg,17,41203088,A,C,1,Pathogenic,reviewed by expert panel,"Aug 10, 2015",calibration,https://www.ncbi.nlm.nih.gov/clinvar/variation/17694/
+418064,c.80G>C,p.Cys27Ser,17,41276034,C,G,1,Likely pathogenic,reviewed by expert panel,"Oct 29, 2026",calibration,https://www.ncbi.nlm.nih.gov/clinvar/variation/418064/
+55396,c.5095C>T,p.Arg1699Trp,17,41215948,G,A,1,Pathogenic,reviewed by expert panel,"Aug 10, 2015",calibration,https://www.ncbi.nlm.nih.gov/clinvar/variation/55396/
+17693,c.211A>G,p.Arg71Gly,17,41258474,T,C,1,Pathogenic,reviewed by expert panel,"Jun 18, 2019",calibration,https://www.ncbi.nlm.nih.gov/clinvar/variation/17693/
+55399,c.5098A>G,p.Thr1700Ala,17,41215945,T,C,1,Likely pathogenic,reviewed by expert panel,"Aug 18, 2025",calibration,https://www.ncbi.nlm.nih.gov/clinvar/variation/55399/
+55412,c.5138T>C,p.Val1713Ala,17,41215905,A,G,1,Likely pathogenic,reviewed by expert panel,"Dec 02, 2025",calibration,https://www.ncbi.nlm.nih.gov/clinvar/variation/55412/
+55383,c.5075A>T,p.Asp1692Val,17,41215968,T,A,1,Likely pathogenic,reviewed by expert panel,"Mar 18, 2026",calibration,https://www.ncbi.nlm.nih.gov/clinvar/variation/55383/
+418671,c.100C>T,p.Pro34Ser,17,41267777,G,A,1,Likely pathogenic,reviewed by expert panel,"Dec 02, 2025",calibration,https://www.ncbi.nlm.nih.gov/clinvar/variation/418671/
+531444,c.5056C>T,p.His1686Tyr,17,41219643,G,A,1,Likely pathogenic,reviewed by expert panel,"Aug 18, 2025",calibration,https://www.ncbi.nlm.nih.gov/clinvar/variation/531444/
+54200,c.131G>T,p.Cys44Phe,17,41267746,C,A,1,Pathogenic,reviewed by expert panel,"Jun 18, 2019",calibration,https://www.ncbi.nlm.nih.gov/clinvar/variation/54200/
+417832,c.5309G>T,p.Gly1770Val,17,41203103,C,A,1,Pathogenic,reviewed by expert panel,"Jul 18, 2018",calibration,https://www.ncbi.nlm.nih.gov/clinvar/variation/417832/
+225711,c.5202T>G,p.Phe1734Leu,17,41209144,A,C,1,Likely pathogenic,reviewed by expert panel,"Jan 04, 2026",calibration,https://www.ncbi.nlm.nih.gov/clinvar/variation/225711/
+37660,c.5363G>T,p.Gly1788Val,17,41201181,C,A,1,Pathogenic,reviewed by expert panel,"Aug 10, 2015",calibration,https://www.ncbi.nlm.nih.gov/clinvar/variation/37660/
+37656,c.5297T>G,p.Ile1766Ser,17,41203115,A,C,1,Pathogenic,reviewed by expert panel,"Aug 10, 2015",calibration,https://www.ncbi.nlm.nih.gov/clinvar/variation/37656/
+37679,c.5509T>C,p.Trp1837Arg,17,41197778,A,G,1,Pathogenic,reviewed by expert panel,"Jun 18, 2019",calibration,https://www.ncbi.nlm.nih.gov/clinvar/variation/37679/
+55461,c.5212G>A,p.Gly1738Arg,17,41209134,C,T,1,Pathogenic,reviewed by expert panel,"Aug 10, 2015",calibration,https://www.ncbi.nlm.nih.gov/clinvar/variation/55461/
+37604,c.4675G>A,p.Glu1559Lys,17,41226348,C,T,1,Pathogenic,reviewed by expert panel,"Jun 18, 2019",calibration,https://www.ncbi.nlm.nih.gov/clinvar/variation/37604/
+54191,c.130T>A,p.Cys44Ser,17,41267747,A,T,1,Pathogenic,reviewed by expert panel,"Aug 10, 2015",calibration,https://www.ncbi.nlm.nih.gov/clinvar/variation/54191/
+37648,c.5207T>C,p.Val1736Ala,17,41209139,A,G,1,Pathogenic,reviewed by expert panel,"Jun 25, 2019",calibration,https://www.ncbi.nlm.nih.gov/clinvar/variation/37648/
+17661,c.181T>G,p.Cys61Gly,17,41258504,A,C,1,Pathogenic,reviewed by expert panel,"Aug 10, 2015",calibration,https://www.ncbi.nlm.nih.gov/clinvar/variation/17661/
+55416,c.5144G>A,p.Ser1715Asn,17,41215899,C,T,1,Pathogenic,reviewed by expert panel,"Jun 18, 2019",calibration,https://www.ncbi.nlm.nih.gov/clinvar/variation/55416/
+55552,c.5365G>A,p.Ala1789Thr,17,41201179,C,T,1,Likely pathogenic,reviewed by expert panel,"Dec 02, 2025",calibration,https://www.ncbi.nlm.nih.gov/clinvar/variation/55552/
+54152,c.115T>C,p.Cys39Arg,17,41267762,A,G,1,Pathogenic,reviewed by expert panel,"Aug 10, 2015",calibration,https://www.ncbi.nlm.nih.gov/clinvar/variation/54152/
+433738,c.5557T>A,p.Tyr1853Asn,17,41197730,A,T,1,Likely pathogenic,reviewed by expert panel,"Jul 15, 2026",calibration,https://www.ncbi.nlm.nih.gov/clinvar/variation/433738/
+54704,c.286G>A,p.Asp96Asn,17,41256900,C,T,1,Likely pathogenic,reviewed by expert panel,"Jan 04, 2026",calibration,https://www.ncbi.nlm.nih.gov/clinvar/variation/54704/
+37633,c.5074G>C,p.Asp1692His,17,41219625,C,G,1,Pathogenic,reviewed by expert panel,"Jun 18, 2019",calibration,https://www.ncbi.nlm.nih.gov/clinvar/variation/37633/
+55414,c.5143A>C,p.Ser1715Arg,17,41215900,T,G,1,Pathogenic,reviewed by expert panel,"Aug 10, 2015",calibration,https://www.ncbi.nlm.nih.gov/clinvar/variation/55414/
+230862,c.122A>T,p.His41Leu,17,41267755,T,A,1,Likely pathogenic,reviewed by expert panel,"May 23, 2025",test,https://www.ncbi.nlm.nih.gov/clinvar/variation/230862/
+54199,c.131G>A,p.Cys44Tyr,17,41267746,C,T,1,Pathogenic,reviewed by expert panel,"Aug 10, 2015",test,https://www.ncbi.nlm.nih.gov/clinvar/variation/54199/
+55510,c.5291T>C,p.Leu1764Pro,17,41203121,A,G,1,Pathogenic,reviewed by expert panel,"Aug 10, 2015",test,https://www.ncbi.nlm.nih.gov/clinvar/variation/55510/
+55415,c.5143A>T,p.Ser1715Cys,17,41215900,T,A,1,Likely pathogenic,reviewed by expert panel,"Dec 02, 2025",test,https://www.ncbi.nlm.nih.gov/clinvar/variation/55415/
+54246,c.140G>A,p.Cys47Tyr,17,41258545,C,T,1,Pathogenic,reviewed by expert panel,"Jun 18, 2019",test,https://www.ncbi.nlm.nih.gov/clinvar/variation/54246/
+96949,c.5339T>G,p.Leu1780Arg,17,41201205,A,C,1,Likely pathogenic,reviewed by expert panel,"Aug 18, 2025",test,https://www.ncbi.nlm.nih.gov/clinvar/variation/96949/
+232047,c.5200T>A,p.Phe1734Ile,17,41209146,A,T,1,Likely pathogenic,reviewed by expert panel,"Aug 18, 2025",test,https://www.ncbi.nlm.nih.gov/clinvar/variation/232047/
+55392,c.5089T>C,p.Cys1697Arg,17,41215954,A,G,1,Pathogenic,reviewed by expert panel,"Jun 11, 2024",test,https://www.ncbi.nlm.nih.gov/clinvar/variation/55392/
+245697,c.4484G>C,p.Arg1495Thr,17,41228505,C,G,1,Pathogenic,reviewed by expert panel,"Jun 18, 2019",test,https://www.ncbi.nlm.nih.gov/clinvar/variation/245697/
+867727,c.56A>C,p.Gln19Pro,17,41276058,T,G,1,Likely pathogenic,reviewed by expert panel,"Aug 27, 2026",test,https://www.ncbi.nlm.nih.gov/clinvar/variation/867727/
+55072,c.3G>T,p.Met1Ile,17,41276111,C,A,1,Pathogenic,reviewed by expert panel,"Jun 18, 2019",test,https://www.ncbi.nlm.nih.gov/clinvar/variation/55072/
+54166,c.122A>G,p.His41Arg,17,41267755,T,C,1,Pathogenic,reviewed by expert panel,"Aug 10, 2015",test,https://www.ncbi.nlm.nih.gov/clinvar/variation/54166/
+462596,c.286G>C,p.Asp96His,17,41256900,C,G,1,Likely pathogenic,reviewed by expert panel,"Oct 29, 2026",test,https://www.ncbi.nlm.nih.gov/clinvar/variation/462596/
+37638,c.5117G>A,p.Gly1706Glu,17,41215926,C,T,1,Pathogenic,reviewed by expert panel,"Aug 10, 2015",test,https://www.ncbi.nlm.nih.gov/clinvar/variation/37638/
+55482,c.5252G>C,p.Arg1751Pro,17,41209094,C,G,1,Likely pathogenic,reviewed by expert panel,"Aug 18, 2025",test,https://www.ncbi.nlm.nih.gov/clinvar/variation/55482/
+54400,c.191G>A,p.Cys64Tyr,17,41258494,C,T,1,Pathogenic,reviewed by expert panel,"Jun 11, 2024",test,https://www.ncbi.nlm.nih.gov/clinvar/variation/54400/
+409353,c.121C>A,p.His41Asn,17,41267756,G,T,1,Likely pathogenic,reviewed by expert panel,"May 23, 2025",test,https://www.ncbi.nlm.nih.gov/clinvar/variation/409353/
+440481,c.5282T>G,p.Phe1761Cys,17,41203130,A,C,1,Likely pathogenic,reviewed by expert panel,"Aug 18, 2025",test,https://www.ncbi.nlm.nih.gov/clinvar/variation/440481/
+37664,c.53T>C,p.Met18Thr,17,41276061,A,G,1,Pathogenic,reviewed by expert panel,"Jun 18, 2019",test,https://www.ncbi.nlm.nih.gov/clinvar/variation/37664/
+55678,c.71G>A,p.Cys24Tyr,17,41276043,C,T,1,Likely pathogenic,reviewed by expert panel,"Jul 23, 2026",test,https://www.ncbi.nlm.nih.gov/clinvar/variation/55678/
+55505,c.5282T>C,p.Phe1761Ser,17,41203130,A,G,1,Pathogenic,reviewed by expert panel,"Dec 02, 2025",test,https://www.ncbi.nlm.nih.gov/clinvar/variation/55505/
+232915,c.5108A>G,p.Tyr1703Cys,17,41215935,T,C,1,Likely pathogenic,reviewed by expert panel,"Dec 02, 2025",test,https://www.ncbi.nlm.nih.gov/clinvar/variation/232915/
+55407,c.5123C>A,p.Ala1708Glu,17,41215920,G,T,1,Pathogenic,reviewed by expert panel,"Aug 10, 2015",test,https://www.ncbi.nlm.nih.gov/clinvar/variation/55407/
+55656,c.65T>C,p.Leu22Ser,17,41276049,A,G,1,Pathogenic,reviewed by expert panel,"Aug 10, 2015",test,https://www.ncbi.nlm.nih.gov/clinvar/variation/55656/
+37632,c.5074G>A,p.Asp1692Asn,17,41219625,C,T,1,Pathogenic,reviewed by expert panel,"Sep 21, 2026",test,https://www.ncbi.nlm.nih.gov/clinvar/variation/37632/
+627968,c.5152T>G,p.Trp1718Gly,17,41215891,A,C,1,Likely pathogenic,reviewed by expert panel,"Dec 02, 2025",test,https://www.ncbi.nlm.nih.gov/clinvar/variation/627968/
+17695,c.5324T>A,p.Met1775Lys,17,41203088,A,T,1,Pathogenic,reviewed by expert panel,"Aug 10, 2015",test,https://www.ncbi.nlm.nih.gov/clinvar/variation/17695/
+91656,c.5516T>C,p.Leu1839Ser,17,41197771,A,G,1,Pathogenic,reviewed by expert panel,"Jun 18, 2019",test,https://www.ncbi.nlm.nih.gov/clinvar/variation/91656/
+801086,c.5257A>G,p.Arg1753Gly,17,41209089,T,C,1,Likely pathogenic,reviewed by expert panel,"May 23, 2025",test,https://www.ncbi.nlm.nih.gov/clinvar/variation/801086/
+91649,c.5357T>C,p.Leu1786Pro,17,41201187,A,G,1,Pathogenic,reviewed by expert panel,"Dec 02, 2025",test,https://www.ncbi.nlm.nih.gov/clinvar/variation/91649/
+54755,c.3022A>G,p.Met1008Val,17,41244526,T,C,0,Benign,reviewed by expert panel,"Aug 10, 2015",calibration,https://www.ncbi.nlm.nih.gov/clinvar/variation/54755/
+41815,c.3113A>G,p.Glu1038Gly,17,41244435,T,C,0,Benign,reviewed by expert panel,"Aug 10, 2015",calibration,https://www.ncbi.nlm.nih.gov/clinvar/variation/41815/
+55568,c.5411T>A,p.Val1804Asp,17,41199716,A,T,0,Benign,reviewed by expert panel,"Aug 10, 2015",calibration,https://www.ncbi.nlm.nih.gov/clinvar/variation/55568/
+37709,c.946A>G,p.Ser316Gly,17,41246602,T,C,0,Benign,reviewed by expert panel,"Jun 18, 2019",calibration,https://www.ncbi.nlm.nih.gov/clinvar/variation/37709/
+54777,c.3143G>T,p.Gly1048Val,17,41244405,C,A,0,Benign,reviewed by expert panel,"Jun 18, 2019",calibration,https://www.ncbi.nlm.nih.gov/clinvar/variation/54777/
+37506,c.3082C>T,p.Arg1028Cys,17,41244466,G,A,0,Benign,reviewed by expert panel,"Jun 11, 2024",calibration,https://www.ncbi.nlm.nih.gov/clinvar/variation/37506/
+37488,c.2758G>A,p.Val920Ile,17,41244790,C,T,0,Benign,reviewed by expert panel,"Jun 18, 2019",calibration,https://www.ncbi.nlm.nih.gov/clinvar/variation/37488/
+54604,c.2566T>C,p.Tyr856His,17,41244982,A,G,0,Benign,reviewed by expert panel,"Aug 10, 2015",calibration,https://www.ncbi.nlm.nih.gov/clinvar/variation/54604/
+37543,c.3713C>T,p.Pro1238Leu,17,41243835,G,A,0,Benign,reviewed by expert panel,"Aug 10, 2015",calibration,https://www.ncbi.nlm.nih.gov/clinvar/variation/37543/
+37615,c.4955T>C,p.Met1652Thr,17,41222976,A,G,0,Benign,reviewed by expert panel,"Aug 10, 2015",calibration,https://www.ncbi.nlm.nih.gov/clinvar/variation/37615/
+37684,c.571G>A,p.Val191Ile,17,41249283,C,T,0,Benign,reviewed by expert panel,"Aug 10, 2015",calibration,https://www.ncbi.nlm.nih.gov/clinvar/variation/37684/
+17670,c.3119G>A,p.Ser1040Asn,17,41244429,C,T,0,Benign,reviewed by expert panel,"Aug 10, 2015",calibration,https://www.ncbi.nlm.nih.gov/clinvar/variation/17670/
+55099,c.4081A>C,p.Met1361Leu,17,41243467,T,G,0,Benign,reviewed by expert panel,"Aug 10, 2015",calibration,https://www.ncbi.nlm.nih.gov/clinvar/variation/55099/
+55262,c.4691T>C,p.Leu1564Pro,17,41223240,A,G,0,Benign,reviewed by expert panel,"Aug 10, 2015",calibration,https://www.ncbi.nlm.nih.gov/clinvar/variation/55262/
+55453,c.5198A>G,p.Asp1733Gly,17,41209148,T,C,0,Benign,reviewed by expert panel,"Jun 18, 2019",calibration,https://www.ncbi.nlm.nih.gov/clinvar/variation/55453/
+812551,c.4081A>T,p.Met1361Leu,17,41243467,T,A,0,Benign,reviewed by expert panel,"Jun 18, 2019",calibration,https://www.ncbi.nlm.nih.gov/clinvar/variation/812551/
+224433,c.4159T>C,p.Ser1387Pro,17,41242987,A,G,0,Likely benign,reviewed by expert panel,"May 23, 2025",calibration,https://www.ncbi.nlm.nih.gov/clinvar/variation/224433/
+54911,c.3541G>A,p.Val1181Ile,17,41244007,C,T,0,Benign,reviewed by expert panel,"Jun 18, 2019",calibration,https://www.ncbi.nlm.nih.gov/clinvar/variation/54911/
+37464,c.2351C>T,p.Ser784Leu,17,41245197,G,A,0,Benign,reviewed by expert panel,"Jun 18, 2019",calibration,https://www.ncbi.nlm.nih.gov/clinvar/variation/37464/
+17676,c.4327C>G,p.Arg1443Gly,17,41234451,G,C,0,Benign,reviewed by expert panel,"Jun 18, 2019",calibration,https://www.ncbi.nlm.nih.gov/clinvar/variation/17676/
+55361,c.5044G>A,p.Glu1682Lys,17,41219655,C,T,0,Benign,reviewed by expert panel,"Aug 10, 2015",calibration,https://www.ncbi.nlm.nih.gov/clinvar/variation/55361/
+54613,c.2597G>A,p.Arg866His,17,41244951,C,T,0,Benign,reviewed by expert panel,"Jun 18, 2019",calibration,https://www.ncbi.nlm.nih.gov/clinvar/variation/54613/
+37489,c.2773A>C,p.Ile925Leu,17,41244775,T,G,0,Benign,reviewed by expert panel,"Aug 10, 2015",calibration,https://www.ncbi.nlm.nih.gov/clinvar/variation/37489/
+54329,c.1703C>T,p.Pro568Leu,17,41245845,G,A,0,Benign,reviewed by expert panel,"Jun 18, 2019",calibration,https://www.ncbi.nlm.nih.gov/clinvar/variation/54329/
+54431,c.199G>T,p.Asp67Tyr,17,41258486,C,A,0,Benign,reviewed by expert panel,"Aug 10, 2015",calibration,https://www.ncbi.nlm.nih.gov/clinvar/variation/54431/
+41817,c.3418A>G,p.Ser1140Gly,17,41244130,T,C,0,Benign,reviewed by expert panel,"Jun 11, 2024",calibration,https://www.ncbi.nlm.nih.gov/clinvar/variation/41817/
+55067,c.397C>T,p.Arg133Cys,17,41256183,G,A,0,Benign,reviewed by expert panel,"Jun 18, 2019",calibration,https://www.ncbi.nlm.nih.gov/clinvar/variation/55067/
+54249,c.1418A>T,p.Asn473Ile,17,41246130,T,A,0,Benign,reviewed by expert panel,"Jun 18, 2019",calibration,https://www.ncbi.nlm.nih.gov/clinvar/variation/54249/
+54310,c.1616C>T,p.Thr539Met,17,41245932,G,A,0,Benign,reviewed by expert panel,"Jun 18, 2019",calibration,https://www.ncbi.nlm.nih.gov/clinvar/variation/54310/
+55438,c.5158A>G,p.Thr1720Ala,17,41215385,T,C,0,Benign,reviewed by expert panel,"Aug 10, 2015",calibration,https://www.ncbi.nlm.nih.gov/clinvar/variation/55438/
+37505,c.305C>G,p.Ala102Gly,17,41256275,G,C,0,Benign,reviewed by expert panel,"Jun 11, 2024",test,https://www.ncbi.nlm.nih.gov/clinvar/variation/37505/
+41826,c.4535G>T,p.Ser1512Ile,17,41226488,C,A,0,Benign,reviewed by expert panel,"Aug 10, 2015",test,https://www.ncbi.nlm.nih.gov/clinvar/variation/41826/
+37452,c.2155A>G,p.Lys719Glu,17,41245393,T,C,0,Benign,reviewed by expert panel,"Jun 11, 2024",test,https://www.ncbi.nlm.nih.gov/clinvar/variation/37452/
+240811,c.5024C>T,p.Thr1675Ile,17,41219675,G,A,0,Benign,reviewed by expert panel,"Jun 18, 2019",test,https://www.ncbi.nlm.nih.gov/clinvar/variation/240811/
+37479,c.2669G>T,p.Gly890Val,17,41244879,C,A,0,Benign,reviewed by expert panel,"Aug 10, 2015",test,https://www.ncbi.nlm.nih.gov/clinvar/variation/37479/
+54830,c.3302G>A,p.Ser1101Asn,17,41244246,C,T,0,Benign,reviewed by expert panel,"Aug 10, 2015",test,https://www.ncbi.nlm.nih.gov/clinvar/variation/54830/
+54278,c.1511G>A,p.Arg504His,17,41246037,C,T,0,Benign,reviewed by expert panel,"Aug 10, 2015",test,https://www.ncbi.nlm.nih.gov/clinvar/variation/54278/
+54099,c.1001C>T,p.Pro334Leu,17,41246547,G,A,0,Benign,reviewed by expert panel,"Aug 10, 2015",test,https://www.ncbi.nlm.nih.gov/clinvar/variation/54099/
+37549,c.3823A>G,p.Ile1275Val,17,41243725,T,C,0,Benign,reviewed by expert panel,"Jun 18, 2019",test,https://www.ncbi.nlm.nih.gov/clinvar/variation/37549/
+55393,c.508C>T,p.Arg170Trp,17,41251831,G,A,0,Benign,reviewed by expert panel,"Jun 18, 2019",test,https://www.ncbi.nlm.nih.gov/clinvar/variation/55393/
+812549,c.891G>T,p.Met297Ile,17,41246657,C,A,0,Benign,reviewed by expert panel,"Jun 18, 2019",test,https://www.ncbi.nlm.nih.gov/clinvar/variation/812549/
+54371,c.1865C>T,p.Ala622Val,17,41245683,G,A,0,Benign,reviewed by expert panel,"Aug 10, 2015",test,https://www.ncbi.nlm.nih.gov/clinvar/variation/54371/
+54567,c.2428A>T,p.Asn810Tyr,17,41245120,T,A,0,Benign,reviewed by expert panel,"Aug 10, 2015",test,https://www.ncbi.nlm.nih.gov/clinvar/variation/54567/
+41809,c.2315T>C,p.Val772Ala,17,41245233,A,G,0,Benign,reviewed by expert panel,"Aug 10, 2015",test,https://www.ncbi.nlm.nih.gov/clinvar/variation/41809/
+54402,c.1927A>G,p.Ser643Gly,17,41245621,T,C,0,Benign,reviewed by expert panel,"Jun 18, 2019",test,https://www.ncbi.nlm.nih.gov/clinvar/variation/54402/
+479223,c.5215G>A,p.Asp1739Asn,17,41209131,C,T,0,Likely benign,reviewed by expert panel,"Aug 27, 2026",test,https://www.ncbi.nlm.nih.gov/clinvar/variation/479223/
+55301,c.4840C>T,p.Pro1614Ser,17,41223091,G,A,0,Benign,reviewed by expert panel,"Aug 10, 2015",test,https://www.ncbi.nlm.nih.gov/clinvar/variation/55301/
+37454,c.2167A>G,p.Asn723Asp,17,41245381,T,C,0,Benign,reviewed by expert panel,"Aug 10, 2015",test,https://www.ncbi.nlm.nih.gov/clinvar/variation/37454/
+183950,c.133A>C,p.Lys45Gln,17,41267744,T,G,0,Benign,reviewed by expert panel,"Aug 10, 2015",test,https://www.ncbi.nlm.nih.gov/clinvar/variation/183950/
+55154,c.4255G>C,p.Glu1419Gln,17,41234523,C,G,0,Benign,reviewed by expert panel,"Aug 10, 2015",test,https://www.ncbi.nlm.nih.gov/clinvar/variation/55154/
+55314,c.4910C>T,p.Pro1637Leu,17,41223021,G,A,0,Benign,reviewed by expert panel,"Aug 10, 2015",test,https://www.ncbi.nlm.nih.gov/clinvar/variation/55314/
+37416,c.1486C>T,p.Arg496Cys,17,41246062,G,A,0,Benign,reviewed by expert panel,"Aug 10, 2015",test,https://www.ncbi.nlm.nih.gov/clinvar/variation/37416/
+55140,c.4204C>T,p.His1402Tyr,17,41234574,G,A,0,Benign,reviewed by expert panel,"Aug 10, 2015",test,https://www.ncbi.nlm.nih.gov/clinvar/variation/55140/
+54561,c.2412G>C,p.Gln804His,17,41245136,C,G,0,Benign,reviewed by expert panel,"Aug 10, 2015",test,https://www.ncbi.nlm.nih.gov/clinvar/variation/54561/
+41816,c.3296C>T,p.Pro1099Leu,17,41244252,G,A,0,Benign,reviewed by expert panel,"Aug 10, 2015",test,https://www.ncbi.nlm.nih.gov/clinvar/variation/41816/
+55720,c.811G>A,p.Val271Met,17,41246737,C,T,0,Benign,reviewed by expert panel,"May 23, 2025",test,https://www.ncbi.nlm.nih.gov/clinvar/variation/55720/
+55339,c.4985T>C,p.Phe1662Ser,17,41222946,A,G,0,Benign,reviewed by expert panel,"Aug 10, 2015",test,https://www.ncbi.nlm.nih.gov/clinvar/variation/55339/
+628452,c.2912A>G,p.His971Arg,17,41244636,T,C,0,Benign,reviewed by expert panel,"Jun 18, 2019",test,https://www.ncbi.nlm.nih.gov/clinvar/variation/628452/
+220023,c.441G>C,p.Leu147Phe,17,41256139,C,G,0,Likely benign,reviewed by expert panel,"Sep 21, 2026",test,https://www.ncbi.nlm.nih.gov/clinvar/variation/220023/
+55064,c.396C>A,p.Asn132Lys,17,41256184,G,T,0,Benign,reviewed by expert panel,"Aug 10, 2015",test,https://www.ncbi.nlm.nih.gov/clinvar/variation/55064/

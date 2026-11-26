@@ -1,0 +1,21 @@
+{
+  "gene": "BRCA1",
+  "assembly": "GRCh37",
+  "source": "ClinVar variant_summary.txt (via data/brca1_clinvar.csv)",
+  "selection": "SNV missense; reviewed by expert panel; P/LP vs B/LB",
+  "seed": 2026,
+  "eligible": {
+    "pathogenic": 79,
+    "benign": 140
+  },
+  "selected": {
+    "calibration": {
+      "pathogenic": 30,
+      "benign": 30
+    },
+    "test": {
+      "pathogenic": 30,
+      "benign": 30
+    }
+  }
+}
