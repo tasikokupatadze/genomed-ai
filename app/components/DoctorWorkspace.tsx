@@ -6,6 +6,7 @@ import { checkOutput, type CheckResult } from "@/lib/checkOutput";
 import type { Dict } from "@/lib/translations";
 import type { DraftSummary, Finding, Lang, LabTrend, Patient } from "@/lib/types";
 import Findings from "./Findings";
+import WhatIfPanel from "./WhatIfPanel";
 import { ConsentLog, EntryTag, NoteLine, ProvenanceTag, catLabel } from "./RecordBits";
 import { RequestDecision, SyncAgain } from "./RequestDecision";
 
@@ -24,9 +25,9 @@ const btn = "rounded-md bg-teal-700 px-3 py-1.5 text-sm font-medium text-white h
 const panel = "rounded-xl bg-white p-4 shadow-sm";
 
 export default function DoctorWorkspace({
-  patient, findings, trends, lang, d, labTests, pgxOptions,
+  patient, findings, trends, drugs, lang, d, labTests, pgxOptions,
 }: {
-  patient: Patient; findings: Finding[]; trends: LabTrend[]; lang: Lang; d: Dict;
+  patient: Patient; findings: Finding[]; trends: LabTrend[]; drugs: string[]; lang: Lang; d: Dict;
   labTests: string[]; pgxOptions: { gene: string; result: string }[];
 }) {
   const router = useRouter();
@@ -224,6 +225,7 @@ export default function DoctorWorkspace({
             <div className="mt-2"><Findings findings={findings} trends={trends} d={d} /></div>
           </section>
           <SummaryPanel key={lang} patient={patient} lang={lang} d={d} />
+          <WhatIfPanel patientId={patient.id} drugs={drugs} d={d} />
         </div>
       </div>
     </div>

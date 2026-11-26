@@ -15,7 +15,10 @@ export default async function DoctorHome() {
     <div className="space-y-4">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <h1 className="text-2xl font-semibold">{d.patients}</h1>
-        <ResetButton label={d.resetDemo} />
+        <div className="flex gap-2">
+          <Link href="/doctor/research" className="rounded-md border border-gray-300 bg-white px-3 py-1.5 text-sm hover:bg-canvas">{d.openPrediction} →</Link>
+          <ResetButton label={d.resetDemo} />
+        </div>
       </div>
       <p className="text-sm text-slate-600">{d.fictional}</p>
       <section className="rounded-xl bg-white p-4 shadow-sm" aria-labelledby="pending-title">

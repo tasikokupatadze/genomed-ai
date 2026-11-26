@@ -167,3 +167,15 @@ In the **Clinician** view, the **Standing instruction** panel lets the doctor de
 - With it on, demo update 4 is shared at once using the prepared Georgian and English message. It's labelled "Shared automatically" for the doctor, and as "sent under your doctor's standing instruction" for the patient.
 - Every other change still waits for the doctor. Demo update 5 (*uncertain → likely pathogenic*, from a second source) always opens a normal review.
 - The rule lives in `lib/demo/standing.ts` (`isLowRiskChange`).
+
+### Prediction check: predict, then check (`/doctor/research`)
+
+GenoMed's warnings come from curated tables. This study checks them against what actually happened.
+- **What if** (each patient page in `/doctor`): pick a medicine and see which labs to watch (with direction and the latest result), gene results and allergy flags. It uses table lookups only, saves nothing, and never estimates how big a change will be.
+- **Prediction check:** for every medicine with a start date, it compares the lab result before the start with the one after.
+  - A warning **came true** if the lab was in range before and out of range in the predicted direction after.
+  - It also lists every real in-range → out-of-range change and whether any medicine predicted it.
+  - Two numbers: *warnings that came true* and *real changes we had predicted*.
+- **Virtual cohort:** "what if every patient started this medicine?"
+- **Demo data:** 6 extra fictional patients (`p003`–`p008`) give 6 of 11 warnings came true and 6 of 7 changes predicted. **These numbers show the method, not real-world accuracy.**
+- **Code:** logic in `lib/research/predict.ts` (unit-tested), lookups in `lib/research/tables.ts`.

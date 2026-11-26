@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { CartesianGrid, ReferenceLine, ResponsiveContainer, Scatter, ScatterChart, Tooltip, XAxis, YAxis } from "recharts";
 import { EVO2_SOURCE } from "@/lib/demo/fixtures";
 import type { Text } from "@/lib/demo/i18n";
@@ -74,6 +75,12 @@ export default function ResearchView({ T }: { T: Text }) {
           </div>
         </section>
       )}
+
+      <section className={`${card} border-l-[3px] border-l-teal-700`}>
+        <h2 className="text-lg font-bold">{T.predCardTitle}</h2>
+        <p className="mt-1">{T.predCardText}</p>
+        <Link href="/doctor/research" className="mt-3 inline-flex rounded-md bg-teal-700 px-4 py-2 text-sm font-medium text-white hover:bg-teal-800">{T.predCardLink} →</Link>
+      </section>
 
       <section className={card}>
         <h2 className="text-lg font-bold">{T.researchLimits}</h2>

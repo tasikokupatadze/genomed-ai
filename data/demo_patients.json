@@ -228,6 +228,332 @@
         ]
       },
       "demo": true
+    },
+    {
+      "id": "p003",
+      "name": "Ana Demo (fictional)",
+      "age": 71,
+      "sex": "F",
+      "conditions": [
+        "Heart failure"
+      ],
+      "medications": [
+        {
+          "name": "Furosemide",
+          "dose": "40 mg once daily",
+          "start_date": "2026-03-01"
+        }
+      ],
+      "allergies": [],
+      "labs": [
+        {
+          "test": "Potassium",
+          "value": 4.1,
+          "unit": "mmol/L",
+          "ref_low": 3.5,
+          "ref_high": 5.1,
+          "date": "2026-02-10"
+        },
+        {
+          "test": "Potassium",
+          "value": 3.3,
+          "unit": "mmol/L",
+          "ref_low": 3.5,
+          "ref_high": 5.1,
+          "date": "2026-04-12"
+        }
+      ],
+      "demo": true,
+      "genetics": {
+        "pgx": [],
+        "variants": []
+      }
+    },
+    {
+      "id": "p004",
+      "name": "Levan Demo (fictional)",
+      "age": 63,
+      "sex": "M",
+      "conditions": [
+        "High blood pressure"
+      ],
+      "medications": [
+        {
+          "name": "Hydrochlorothiazide",
+          "dose": "25 mg once daily",
+          "start_date": "2026-01-15"
+        }
+      ],
+      "allergies": [],
+      "labs": [
+        {
+          "test": "Sodium",
+          "value": 140,
+          "unit": "mmol/L",
+          "ref_low": 135,
+          "ref_high": 145,
+          "date": "2026-01-05"
+        },
+        {
+          "test": "Potassium",
+          "value": 4.0,
+          "unit": "mmol/L",
+          "ref_low": 3.5,
+          "ref_high": 5.1,
+          "date": "2026-01-05"
+        },
+        {
+          "test": "Sodium",
+          "value": 138,
+          "unit": "mmol/L",
+          "ref_low": 135,
+          "ref_high": 145,
+          "date": "2026-03-02"
+        },
+        {
+          "test": "Potassium",
+          "value": 3.9,
+          "unit": "mmol/L",
+          "ref_low": 3.5,
+          "ref_high": 5.1,
+          "date": "2026-03-02"
+        }
+      ],
+      "demo": true,
+      "genetics": {
+        "pgx": [],
+        "variants": []
+      }
+    },
+    {
+      "id": "p005",
+      "name": "Mariam Demo (fictional)",
+      "age": 55,
+      "sex": "F",
+      "conditions": [
+        "High cholesterol"
+      ],
+      "medications": [
+        {
+          "name": "Atorvastatin",
+          "dose": "40 mg once daily",
+          "start_date": "2026-02-01"
+        }
+      ],
+      "allergies": [],
+      "labs": [
+        {
+          "test": "ALT",
+          "value": 25,
+          "unit": "U/L",
+          "ref_low": 7,
+          "ref_high": 56,
+          "date": "2026-01-20"
+        },
+        {
+          "test": "CK",
+          "value": 90,
+          "unit": "U/L",
+          "ref_low": 30,
+          "ref_high": 200,
+          "date": "2026-01-20"
+        },
+        {
+          "test": "ALT",
+          "value": 30,
+          "unit": "U/L",
+          "ref_low": 7,
+          "ref_high": 56,
+          "date": "2026-04-01"
+        },
+        {
+          "test": "CK",
+          "value": 260,
+          "unit": "U/L",
+          "ref_low": 30,
+          "ref_high": 200,
+          "date": "2026-04-01"
+        }
+      ],
+      "demo": true,
+      "genetics": {
+        "pgx": [],
+        "variants": []
+      }
+    },
+    {
+      "id": "p006",
+      "name": "Irakli Demo (fictional)",
+      "age": 47,
+      "sex": "M",
+      "conditions": [
+        "Asthma flare"
+      ],
+      "medications": [
+        {
+          "name": "Prednisone",
+          "dose": "20 mg once daily",
+          "start_date": "2026-05-10"
+        }
+      ],
+      "allergies": [],
+      "labs": [
+        {
+          "test": "Glucose",
+          "value": 88,
+          "unit": "mg/dL",
+          "ref_low": 70,
+          "ref_high": 99,
+          "date": "2026-05-01"
+        },
+        {
+          "test": "White blood cell count",
+          "value": 7.2,
+          "unit": "10^9/L",
+          "ref_low": 4.0,
+          "ref_high": 11.0,
+          "date": "2026-05-01"
+        },
+        {
+          "test": "Glucose",
+          "value": 128,
+          "unit": "mg/dL",
+          "ref_low": 70,
+          "ref_high": 99,
+          "date": "2026-06-01"
+        },
+        {
+          "test": "White blood cell count",
+          "value": 9.8,
+          "unit": "10^9/L",
+          "ref_low": 4.0,
+          "ref_high": 11.0,
+          "date": "2026-06-01"
+        }
+      ],
+      "demo": true,
+      "genetics": {
+        "pgx": [],
+        "variants": []
+      }
+    },
+    {
+      "id": "p007",
+      "name": "Tamar Demo (fictional)",
+      "age": 59,
+      "sex": "F",
+      "conditions": [
+        "High blood pressure"
+      ],
+      "medications": [
+        {
+          "name": "Lisinopril",
+          "dose": "10 mg once daily",
+          "start_date": "2026-04-01"
+        }
+      ],
+      "allergies": [],
+      "labs": [
+        {
+          "test": "Potassium",
+          "value": 4.4,
+          "unit": "mmol/L",
+          "ref_low": 3.5,
+          "ref_high": 5.1,
+          "date": "2026-03-20"
+        },
+        {
+          "test": "TSH",
+          "value": 2.0,
+          "unit": "mIU/L",
+          "ref_low": 0.4,
+          "ref_high": 4.0,
+          "date": "2026-03-20"
+        },
+        {
+          "test": "Potassium",
+          "value": 4.8,
+          "unit": "mmol/L",
+          "ref_low": 3.5,
+          "ref_high": 5.1,
+          "date": "2026-05-15"
+        },
+        {
+          "test": "TSH",
+          "value": 5.6,
+          "unit": "mIU/L",
+          "ref_low": 0.4,
+          "ref_high": 4.0,
+          "date": "2026-05-15"
+        }
+      ],
+      "demo": true,
+      "genetics": {
+        "pgx": [],
+        "variants": []
+      }
+    },
+    {
+      "id": "p008",
+      "name": "Giga Demo (fictional)",
+      "age": 68,
+      "sex": "M",
+      "conditions": [
+        "Type 2 diabetes",
+        "Heart failure"
+      ],
+      "medications": [
+        {
+          "name": "Metformin",
+          "dose": "1000 mg twice daily",
+          "start_date": "2025-01-10"
+        },
+        {
+          "name": "Spironolactone",
+          "dose": "25 mg once daily",
+          "start_date": "2026-01-01"
+        }
+      ],
+      "allergies": [],
+      "labs": [
+        {
+          "test": "Vitamin B12",
+          "value": 420,
+          "unit": "pg/mL",
+          "ref_low": 200,
+          "ref_high": 900,
+          "date": "2025-01-05"
+        },
+        {
+          "test": "Potassium",
+          "value": 4.6,
+          "unit": "mmol/L",
+          "ref_low": 3.5,
+          "ref_high": 5.1,
+          "date": "2025-12-20"
+        },
+        {
+          "test": "Vitamin B12",
+          "value": 180,
+          "unit": "pg/mL",
+          "ref_low": 200,
+          "ref_high": 900,
+          "date": "2026-02-01"
+        },
+        {
+          "test": "Potassium",
+          "value": 5.4,
+          "unit": "mmol/L",
+          "ref_low": 3.5,
+          "ref_high": 5.1,
+          "date": "2026-02-01"
+        }
+      ],
+      "demo": true,
+      "genetics": {
+        "pgx": [],
+        "variants": []
+      }
     }
   ]
 }
