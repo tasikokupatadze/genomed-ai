@@ -1,6 +1,7 @@
 import "server-only";
 import { allergyClasses, norm } from "../data";
-import type { Allergy, AllergyFinding, AllergyUncheckedFinding } from "../types";
+import { medCheckNames } from "../meds";
+import type { Allergy, AllergyFinding, AllergyUncheckedFinding, Medication } from "../types";
 
 const splitClasses = (s: string) => s.split("|").map(norm).filter(Boolean);
 
@@ -49,6 +50,15 @@ export function checkMedicationAgainstAllergies(
   return [];
 }
 
-export function checkAllergies(meds: { name: string }[], allergies: Allergy[]) {
-  return meds.flatMap((m) => checkMedicationAgainstAllergies(m.name, allergies));
+/** Checks every active ingredient of every medication; labels show the brand and ingredient. */
+export function checkAllergies(meds: Medication[], allergies: Allergy[]) {
+  return meds.flatMap((m) => {
+    const names = medCheckNames(m);
+    return names.flatMap((n) =>
+      checkMedicationAgainstAllergies(n, allergies).map((f) => ({
+        ...f,
+        medication: norm(n) === norm(m.name) ? m.name : `${m.name} (${n})`,
+      })),
+    );
+  });
 }

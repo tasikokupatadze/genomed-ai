@@ -4,6 +4,7 @@ import { t } from "@/lib/translations";
 import { listPatients } from "@/lib/store";
 import { runChecks } from "@/lib/analyze";
 import ResetButton from "@/app/components/ResetButton";
+import { RequestDecision } from "@/app/components/RequestDecision";
 
 export const dynamic = "force-dynamic";
 
@@ -17,6 +18,15 @@ export default async function DoctorHome() {
         <ResetButton label={d.resetDemo} />
       </div>
       <p className="text-sm text-slate-600">{d.fictional}</p>
+      <section className="rounded-xl bg-white p-4 shadow-sm" aria-labelledby="pending-title">
+        <h2 id="pending-title" className="font-semibold">{d.pendingRequests}</h2>
+        <div className="mt-2 space-y-2">
+          {patients.flatMap((p) => (p.record_requests ?? []).filter((r) => r.status === "pending").map((r) => (
+            <RequestDecision key={r.id} patientId={p.id} patientName={p.name} request={r} d={d} />
+          )))}
+          {!patients.some((p) => p.record_requests?.some((r) => r.status === "pending")) && <p className="text-sm text-slate-500">{d.noPendingRequests}</p>}
+        </div>
+      </section>
       <div className="overflow-hidden rounded-xl bg-white shadow-sm">
         <table className="w-full text-left text-sm">
           <thead className="bg-slate-50 text-slate-600">

@@ -1,0 +1,35 @@
+{
+  "_comment": "SIMULATED clinic system for the demo. Fictional records shaped like FHIR R4 resources (simplified). Read only through lib/ehr (EhrConnector), never directly.",
+  "clinics": [
+    { "id": "clinic-family-demo", "name": "Demo Family Clinic, Tbilisi (fictional)" },
+    { "id": "clinic-cardio-demo", "name": "Demo Heart Centre (fictional)" }
+  ],
+  "records": [
+    {
+      "clinic_id": "clinic-family-demo",
+      "patient_id": "p001",
+      "resources": [
+        { "resourceType": "Observation", "id": "obs-1001", "code": { "text": "Potassium" }, "valueQuantity": { "value": 4.4, "unit": "mmol/L" }, "referenceRange": [{ "low": { "value": 3.5 }, "high": { "value": 5.1 } }], "effectiveDateTime": "2026-02-03" },
+        { "resourceType": "Observation", "id": "obs-1002", "code": { "text": "Potassium" }, "valueQuantity": { "value": 4.2, "unit": "mmol/L" }, "referenceRange": [{ "low": { "value": 3.6 }, "high": { "value": 5.2 } }], "effectiveDateTime": "2026-05-12" },
+        { "resourceType": "Condition", "id": "cond-1001", "code": { "text": "High blood pressure" }, "onsetDateTime": "2023-04-01" },
+        { "resourceType": "Condition", "id": "cond-1002", "code": { "text": "Seasonal allergies" }, "onsetDateTime": "2019-05-01" },
+        { "resourceType": "Procedure", "id": "proc-1001", "code": { "text": "Appendectomy" }, "performedDateTime": "2015-06-10" },
+        { "resourceType": "MedicationRequest", "id": "medreq-1001", "medicationCodeableConcept": { "text": "Furosemide" }, "dosageInstruction": [{ "text": "40 mg once daily" }], "dispenseRequest": { "validityPeriod": { "start": "2026-07-01" } } },
+        { "resourceType": "AllergyIntolerance", "id": "allergy-1001", "code": { "text": "Penicillin" }, "reaction": [{ "manifestation": [{ "text": "Rash" }] }] }
+      ]
+    },
+    {
+      "clinic_id": "clinic-cardio-demo",
+      "patient_id": "p002",
+      "resources": [
+        { "resourceType": "Observation", "id": "obs-2001", "code": { "text": "TSH" }, "valueQuantity": { "value": 2.1, "unit": "mIU/L" }, "referenceRange": [{ "low": { "value": 0.4 }, "high": { "value": 4.0 } }], "effectiveDateTime": "2026-04-02" },
+        { "resourceType": "Observation", "id": "obs-2002", "code": { "text": "Potassium" }, "valueQuantity": { "value": 4.6, "unit": "mmol/L" }, "referenceRange": [{ "low": { "value": 3.5 }, "high": { "value": 5.1 } }], "effectiveDateTime": "2026-06-15" },
+        { "resourceType": "Condition", "id": "cond-2001", "code": { "text": "Type 2 diabetes" }, "onsetDateTime": "2021-05-20" },
+        { "resourceType": "Procedure", "id": "proc-2001", "code": { "text": "Coronary stent placement" }, "performedDateTime": "2025-11-18" },
+        { "resourceType": "MedicationRequest", "id": "medreq-2001", "medicationCodeableConcept": { "text": "Lisinopril" }, "dosageInstruction": [{ "text": "10 mg once daily" }], "dispenseRequest": { "validityPeriod": { "start": "2024-02-01" } } },
+        { "resourceType": "MedicationRequest", "id": "medreq-2002", "medicationCodeableConcept": { "text": "Atorvastatin" }, "dosageInstruction": [{ "text": "40 mg once daily" }], "dispenseRequest": { "validityPeriod": { "start": "2025-11-20" } } },
+        { "resourceType": "AllergyIntolerance", "id": "allergy-2001", "code": { "text": "Sulfonamide antibiotics" }, "reaction": [{ "manifestation": [{ "text": "Hives" }] }] }
+      ]
+    }
+  ]
+}

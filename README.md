@@ -98,3 +98,26 @@ The patient sees the chart only after the doctor approves. It is saved with the 
 Demo: Nino (`p001`) has three fictional potassium results: in range before furosemide started, then below range after.
 Lab entries need a `date` and medications a `start_date` (YYYY-MM-DD); `end_date` is optional.
 
+
+### Medicine photo scan (in `/patient/[id]`)
+
+"Add medication" offers **Scan the box** or **Type it in**.
+- **Upload:** the photo is shrunk and re-encoded as JPEG in the browser (this drops camera metadata). It is sent to `POST /api/scan/medicine`, which passes **only the image** to Claude's vision model and keeps it in memory. Nothing is stored, and the route takes no patient name or ID.
+- **What Claude returns:** strict JSON (`brand_name`, `active_ingredients`, `form`, `confidence`, `unreadable`). The prompt says to read only what is printed and to return null with low confidence rather than guess.
+- **Matching:** each ingredient is matched against `data/drug_list.csv`: exact name, then synonyms (including Georgian), then small typos. Anything that doesn't match is saved as **unmatched** and flagged for the doctor. The drug class is never guessed.
+- **Confirmation:** a confirm screen shows the photo next to editable fields, with low-confidence fields highlighted. Nothing is saved until the patient confirms and adds how they take it (dose, frequency, start date). The allergy check runs right after saving.
+- **Fallback:** if the scan fails, **Type it in** keeps whatever was already read.
+
+Scanning needs `ANTHROPIC_API_KEY` on the server. Without it, the scan returns an error and the patient types the medication in. **Test with photos of 2–3 real medicine boxes** taken by the team; the scan has not yet been tested against real photos.
+
+### Simulated doctor record sync
+
+The clinic system is **simulated**: `data/mock_ehr.json` holds fictional FHIR-shaped resources (Observation, Condition, Procedure, MedicationRequest, AllergyIntolerance).
+- **Connector:** all sync code goes through `EhrConnector` (`lib/ehr/types.ts`); `MockEhrConnector` is the only implementation. Swap `getEhrConnector()` in `lib/ehr/index.ts` for a real one later.
+- **Flow:**
+  1. The patient requests records and picks the categories.
+  2. The doctor (on `/doctor`) can untick categories, then approves or declines.
+  3. On approval, records are fetched through the connector and imported, tagged "Clinic record (simulated)" with the clinic and import date.
+- **Duplicates are skipped:** a lab with the same test, date and value; a medication with the same name and start date; the same allergy, condition or procedure.
+- **After import:** checks and charts re-run automatically. Imported records can't be edited; patients can add a note to them.
+- **Revoking access** blocks future syncs, and imported records stay. Every event is in the consent log, shown to patient and doctor.

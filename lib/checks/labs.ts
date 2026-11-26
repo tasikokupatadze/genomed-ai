@@ -1,4 +1,5 @@
 import "server-only";
+import { medCheckNames } from "../meds";
 import { canonicalLab, drugClassOf, drugLabEffects, norm, type DrugLabEffect } from "../data";
 import type {
   LabMedFinding, LabResult, LabTrend, LabUnexplainedFinding, Medication, Patient, TrendEntry,
@@ -14,11 +15,13 @@ export function outOfRange(lab: LabResult): "high" | "low" | null {
 
 /** Does this table row describe this medication (by drug name or by drug class)? */
 function rowMatchesMed(row: DrugLabEffect, med: Medication): boolean {
-  const cls = drugClassOf(med.name);
-  return Boolean(
-    (row.drug && norm(row.drug) === norm(med.name)) ||
-    (row.drug_class && cls && norm(row.drug_class) === norm(cls)),
-  );
+  return medCheckNames(med).some((name) => {
+    const cls = drugClassOf(name);
+    return Boolean(
+      (row.drug && norm(row.drug) === norm(name)) ||
+      (row.drug_class && cls && norm(row.drug_class) === norm(cls)),
+    );
+  });
 }
 
 /** Medications the curated table links to this test (any direction). */
@@ -66,7 +69,7 @@ export function checkLabs(labs: LabResult[], meds: Medication[]): (LabMedFinding
           lab, direction,
           canonical_test: canonicalLab(lab.test),
           medication: med.name,
-          matched_on: row.drug && norm(row.drug) === norm(med.name) ? row.drug : row.drug_class,
+          matched_on: row.drug && medCheckNames(med).some((n) => norm(n) === norm(row.drug)) ? row.drug : row.drug_class,
           effect_description: row.effect_description,
           source_url: row.source_url,
           reviewed_by: row.reviewed_by,

@@ -1,5 +1,6 @@
 import "server-only";
 import { drugClassOf, norm, pgxTable } from "../data";
+import { medCheckNames } from "../meds";
 import type { Medication, PgxFinding, PgxResult } from "../types";
 
 /** Table lookup against data/pgx.csv. Not an AI prediction. */
@@ -10,10 +11,10 @@ export function checkPgx(results: PgxResult[], meds: Medication[]): PgxFinding[]
     for (const row of table) {
       if (norm(row.gene) !== norm(r.gene) || norm(row.variant_or_phenotype) !== norm(r.result)) continue;
       const patient_takes = meds
-        .filter((m) => {
-          const cls = drugClassOf(m.name);
-          return norm(m.name) === norm(row.drug) || (cls !== null && norm(cls) === norm(row.drug));
-        })
+        .filter((m) => medCheckNames(m).some((name) => {
+          const cls = drugClassOf(name);
+          return norm(name) === norm(row.drug) || (cls !== null && norm(cls) === norm(row.drug));
+        }))
         .map((m) => m.name);
       findings.push({
         kind: "pgx",

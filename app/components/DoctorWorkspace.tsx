@@ -6,6 +6,8 @@ import { checkOutput, type CheckResult } from "@/lib/checkOutput";
 import type { Dict } from "@/lib/translations";
 import type { DraftSummary, Finding, Lang, LabTrend, Patient } from "@/lib/types";
 import Findings from "./Findings";
+import { ConsentLog, EntryTag, NoteLine, ProvenanceTag, catLabel } from "./RecordBits";
+import { RequestDecision, SyncAgain } from "./RequestDecision";
 
 interface AnalyzeResponse {
   lang: Lang;
@@ -81,12 +83,37 @@ export default function DoctorWorkspace({
           <section className={panel}>
             <h2 className="font-semibold">{d.conditions}</h2>
             <p className="mt-1 text-sm text-slate-700">{patient.conditions.join(", ") || d.none}</p>
+            {(patient.clinic_conditions ?? []).length > 0 && (
+              <ul className="mt-2 space-y-1 text-sm">
+                {patient.clinic_conditions!.map((c) => <li key={c.id}>{c.text}{c.onset ? ` (${c.onset})` : ""} <ProvenanceTag prov={c.provenance} d={d} /><NoteLine note={c.patient_note} d={d} /></li>)}
+              </ul>
+            )}
+            {(patient.procedures ?? []).length > 0 && (
+              <>
+                <h3 className="mt-3 text-sm font-semibold">{d.procedures}</h3>
+                <ul className="mt-1 space-y-1 text-sm">
+                  {patient.procedures!.map((x) => <li key={x.id}>{x.text}{x.date ? ` (${x.date})` : ""} <ProvenanceTag prov={x.provenance} d={d} /><NoteLine note={x.patient_note} d={d} /></li>)}
+                </ul>
+              </>
+            )}
           </section>
 
           <section className={panel}>
             <h2 className="font-semibold">{d.medications}</h2>
             <ul className="mt-2 space-y-1 text-sm">
-              {patient.medications.map((m, i) => <li key={i}><b>{m.name}</b> <span className="text-slate-600">{m.dose}</span> <span className="text-xs text-slate-500">· {d.started} {m.start_date ?? "?"}{m.end_date ? ` · ${d.stopped} ${m.end_date}` : ""}</span></li>)}
+              {patient.medications.map((m, i) => (
+                <li key={m.id ?? i}>
+                  <b>{m.name}</b>{m.brand_name && m.brand_name !== m.name ? ` (${m.brand_name})` : ""} <span className="text-slate-600">{[m.dose, m.frequency, m.form].filter(Boolean).join(", ")}</span>{" "}
+                  <span className="text-xs text-slate-500">· {d.started} {m.start_date ?? "?"}{m.end_date ? ` · ${d.stopped} ${m.end_date}` : ""}</span>
+                  <EntryTag m={m} d={d} />
+                  {m.ingredients && m.ingredients.length > 0 && (m.entered_by === "patient_scan" || m.match_status === "unmatched" || m.ingredients.length > 1) && (
+                    <span className="block text-xs text-slate-600">
+                      {m.ingredients.map((g) => `${g.name}${g.strength ? ` ${g.strength}${g.unit ?? ""}` : ""} → ${g.matched_ingredient ? `${g.matched_ingredient}${g.drug_class ? ` (${g.drug_class})` : ""}` : "?"}`).join(" · ")}
+                    </span>
+                  )}
+                  <NoteLine note={m.patient_note} d={d} />
+                </li>
+              ))}
               {!patient.medications.length && <li className="text-slate-500">{d.none}</li>}
             </ul>
             <form onSubmit={submit(`${base}/medications`, ["name", "dose", "start_date", "end_date"])} className="mt-3 grid grid-cols-2 gap-2">
@@ -101,7 +128,7 @@ export default function DoctorWorkspace({
           <section className={panel}>
             <h2 className="font-semibold">{d.allergies}</h2>
             <ul className="mt-2 space-y-1 text-sm">
-              {patient.allergies.map((a, i) => <li key={i}><b>{a.drug}</b> <span className="text-slate-600">{a.reaction}</span></li>)}
+              {patient.allergies.map((a, i) => <li key={a.id ?? i}><b>{a.drug}</b> <span className="text-slate-600">{a.reaction}</span> <ProvenanceTag prov={a.provenance} d={d} /><NoteLine note={a.patient_note} d={d} /></li>)}
               {!patient.allergies.length && <li className="text-slate-500">{d.none}</li>}
             </ul>
             <form onSubmit={submit(`${base}/allergies`, ["drug", "reaction"])} className="mt-3 grid grid-cols-[1fr_1fr_auto] gap-2">
@@ -127,7 +154,7 @@ export default function DoctorWorkspace({
                         <td className="py-1.5">{l.test}</td>
                         <td className={dir ? "font-semibold text-red-700" : ""}>{l.value} {l.unit}{dir && ` (${d[dir]})`}</td>
                         <td className="text-slate-600">{l.ref_low}–{l.ref_high}</td>
-                        <td className="whitespace-nowrap text-slate-500">{l.date}</td>
+                        <td className="whitespace-nowrap text-slate-500">{l.date}{l.provenance && <span className="block" title={l.provenance.clinic_name}>🏥 {d.simulatedBadge}</span>}{l.patient_note && <span className="block text-xs italic">💬 {l.patient_note}</span>}</td>
                       </tr>
                     );
                   })}
@@ -171,6 +198,22 @@ export default function DoctorWorkspace({
               <input name="hgvs_c" placeholder={`BRCA1 ${d.variant}, e.g. c.68_69delAG`} required className={input} />
               <button className={btn}>{d.add}</button>
             </form>
+          </section>
+          <section className={panel}>
+            <h2 className="font-semibold">{d.recordRequests}</h2>
+            <div className="mt-2 space-y-2 text-sm">
+              {(patient.record_requests ?? []).slice().reverse().map((r) => r.status === "pending"
+                ? <RequestDecision key={r.id} patientId={patient.id} request={r} d={d} />
+                : (
+                  <div key={r.id} className="rounded-lg border border-slate-200 p-2">
+                    <b>{r.clinic_name}</b> · {d[`status_${r.status}` as const]} · {(r.approved_categories ?? r.categories).map((c) => catLabel(c, d)).join(", ")}
+                    {r.status === "approved" && <div className="mt-1"><SyncAgain patientId={patient.id} request={r} d={d} /></div>}
+                  </div>
+                ))}
+              {!(patient.record_requests ?? []).length && <p className="text-slate-500">{d.noPendingRequests}</p>}
+            </div>
+            <h3 className="mt-3 text-sm font-semibold">{d.consentLog}</h3>
+            <div className="mt-1"><ConsentLog events={patient.consent_log ?? []} d={d} /></div>
           </section>
         </div>
 

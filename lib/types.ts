@@ -1,13 +1,80 @@
 export type Lang = "en" | "ka";
 
-export interface Medication {
+/** Where an imported item came from. The clinic system is SIMULATED in this demo. */
+export interface Provenance {
+  source: "clinic_simulated";
+  clinic_id: string;
+  clinic_name: string;
+  imported_at: string;
+  request_id: string;
+  ehr_id: string;
+}
+/** Fields every imported clinic record has: read-only for the patient, who may add a note. */
+interface Imported { id?: string; provenance?: Provenance; patient_note?: string }
+
+export interface MedIngredient {
+  name: string;                     // as read from the box or typed
+  strength: string | null;
+  unit: string | null;
+  matched_ingredient: string | null; // from data/drug_list.csv, null = unmatched
+  drug_class: string | null;         // from data/drug_list.csv only, never guessed
+}
+
+export interface Medication extends Imported {
   name: string;
   dose: string;
   start_date: string; // YYYY-MM-DD
   end_date?: string;  // YYYY-MM-DD, optional
+  frequency?: string;
+  brand_name?: string;
+  form?: string;
+  ingredients?: MedIngredient[];
+  match_status?: "matched" | "unmatched";
+  entered_by?: "doctor" | "patient_typed" | "patient_scan" | "clinic";
 }
-export interface Allergy { drug: string; reaction: string }
-export interface LabResult {
+export interface Allergy extends Imported { drug: string; reaction: string }
+
+export interface ClinicCondition extends Imported { text: string; onset?: string }
+export interface ProcedureRecord extends Imported { text: string; date?: string }
+
+export type RecordCategory = "labs" | "conditions" | "surgeries" | "prescriptions" | "allergies";
+export const RECORD_CATEGORIES: RecordCategory[] = ["labs", "conditions", "surgeries", "prescriptions", "allergies"];
+
+export interface ImportSummary {
+  at: string;
+  imported: Record<RecordCategory, number>;
+  skipped_duplicates: Record<RecordCategory, number>;
+}
+export interface RecordRequest {
+  id: string;
+  clinic_id: string;
+  clinic_name: string;
+  categories: RecordCategory[];          // what the patient asked for
+  status: "pending" | "approved" | "declined";
+  requested_at: string;
+  decided_at?: string;
+  approved_categories?: RecordCategory[]; // what the doctor approved
+  syncs?: ImportSummary[];
+}
+export interface Consent {
+  clinic_id: string;
+  clinic_name: string;
+  categories: RecordCategory[];
+  active: boolean;
+  granted_at: string;
+  revoked_at?: string;
+}
+export interface ConsentEvent {
+  at: string;
+  actor: "patient" | "doctor" | "system";
+  event: "requested" | "approved" | "declined" | "synced" | "revoked" | "sync_blocked";
+  clinic_id: string;
+  clinic_name: string;
+  request_id?: string;
+  categories?: RecordCategory[];
+  detail?: string;
+}
+export interface LabResult extends Imported {
   test: string;
   value: number;
   unit: string;
@@ -63,6 +130,11 @@ export interface Patient {
   genetics: { pgx: PgxResult[]; variants: VariantResult[] };
   approved?: Partial<Record<Lang, ApprovedSummary>>;
   demo?: boolean;
+  clinic_conditions?: ClinicCondition[];
+  procedures?: ProcedureRecord[];
+  record_requests?: RecordRequest[];
+  consents?: Consent[];
+  consent_log?: ConsentEvent[];
 }
 
 // ---- findings ----
