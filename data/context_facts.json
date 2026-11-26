@@ -1,0 +1,41 @@
+{
+  "_comment": "Approved plain-language facts the LLM may use. Only add facts a clinician has reviewed. Georgian text needs native-speaker review. Fill reviewed_by before real use.",
+  "reviewed_by": "",
+  "facts": {
+    "always": {
+      "en": ["Talk to your doctor before changing any medicine.", "Your doctor will look at all your results together."],
+      "ka": ["ნებისმიერი წამლის შეცვლამდე დაელაპარაკეთ ექიმს.", "ექიმი ყველა თქვენს შედეგს ერთად განიხილავს."]
+    },
+    "lab_medication": {
+      "en": ["Some medicines can change blood test results.", "A medicine is only one possible reason for a result outside the range.", "Each lab prints its own reference range on the report."],
+      "ka": ["ზოგიერთ წამალს შეუძლია სისხლის ანალიზის შედეგების შეცვლა.", "წამალი მხოლოდ ერთ-ერთი შესაძლო მიზეზია, რის გამოც შედეგი ნორმის ფარგლებს გარეთაა.", "თითოეული ლაბორატორია ანგარიშში საკუთარ ნორმის ფარგლებს უთითებს."]
+    },
+    "lab_unexplained": {
+      "en": ["A result outside the range has no medicine link in our table. Your doctor will review it."],
+      "ka": ["ნორმის გარეთ მყოფ ამ შედეგს ჩვენს ცხრილში წამალთან კავშირი არ აქვს. ექიმი მას განიხილავს."]
+    },
+    "allergy": {
+      "en": ["A medicine on your list matches an allergy you reported, or is in the same drug group. Your doctor has been asked to review it."],
+      "ka": ["თქვენს სიაში არსებული წამალი ემთხვევა თქვენ მიერ მითითებულ ალერგიას, ან იმავე ჯგუფს მიეკუთვნება. ექიმს სთხოვეს, განიხილოს ეს."]
+    },
+    "pgx": {
+      "en": ["Some gene results can change how the body handles certain medicines."],
+      "ka": ["ზოგიერთი გენის შედეგმა შეიძლება შეცვალოს, როგორ ამუშავებს ორგანიზმი გარკვეულ წამლებს."]
+    },
+    "variant": {
+      "en": ["ClinVar is a public database where labs share what they know about gene changes.", "Classifications can change as more evidence is collected."],
+      "ka": ["ClinVar არის საჯარო მონაცემთა ბაზა, სადაც ლაბორატორიები აზიარებენ ცოდნას გენის ცვლილებების შესახებ.", "კლასიფიკაცია შეიძლება შეიცვალოს, როცა მეტი მტკიცებულება დაგროვდება."]
+    },
+    "variant_class": {
+      "Pathogenic": {"en": "Pathogenic means the change is known to affect how the gene works.", "ka": "პათოგენური ნიშნავს, რომ ცნობილია, რომ ეს ცვლილება გავლენას ახდენს გენის მუშაობაზე."},
+      "Likely pathogenic": {"en": "Likely pathogenic means the change probably affects how the gene works.", "ka": "სავარაუდოდ პათოგენური ნიშნავს, რომ ეს ცვლილება, სავარაუდოდ, გავლენას ახდენს გენის მუშაობაზე."},
+      "Uncertain significance": {"en": "Uncertain significance means there is not yet enough evidence to say whether the change affects health.", "ka": "გაურკვეველი მნიშვნელობა ნიშნავს, რომ ჯერ არ არის საკმარისი მტკიცებულება იმის სათქმელად, მოქმედებს თუ არა ცვლილება ჯანმრთელობაზე."},
+      "Likely benign": {"en": "Likely benign means the change probably does not affect how the gene works.", "ka": "სავარაუდოდ კეთილთვისებიანი ნიშნავს, რომ ეს ცვლილება, სავარაუდოდ, არ მოქმედებს გენის მუშაობაზე."},
+      "Benign": {"en": "Benign means the change is not expected to affect how the gene works.", "ka": "კეთილთვისებიანი ნიშნავს, რომ ეს ცვლილება, როგორც მოსალოდნელია, არ მოქმედებს გენის მუშაობაზე."},
+      "Conflicting classifications of pathogenicity": {"en": "Conflicting means different labs have reached different conclusions about this change.", "ka": "ურთიერთსაწინააღმდეგო ნიშნავს, რომ სხვადასხვა ლაბორატორიამ ამ ცვლილებაზე განსხვავებულ დასკვნამდე მიაღწია."}
+    },
+    "gene_function": {
+      "BRCA1": {"en": "BRCA1 is a gene that helps the body repair damaged DNA.", "ka": "BRCA1 არის გენი, რომელიც ორგანიზმს დაზიანებული დნმ-ის აღდგენაში ეხმარება."}
+    }
+  }
+}

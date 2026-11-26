@@ -1,0 +1,55 @@
+{
+  "_comment": "FICTIONAL patients for the demo. Not real people. Lab values and reference ranges are made up to look like a lab report.",
+  "patients": [
+    {
+      "id": "p001",
+      "name": "Nino Demo (fictional)",
+      "age": 58,
+      "sex": "F",
+      "conditions": ["High cholesterol", "High blood pressure"],
+      "medications": [
+        {"name": "Atorvastatin", "dose": "20 mg once daily"},
+        {"name": "Furosemide", "dose": "40 mg once daily"},
+        {"name": "Amoxicillin", "dose": "500 mg three times daily"}
+      ],
+      "allergies": [{"drug": "Penicillin", "reaction": "Rash"}],
+      "labs": [
+        {"test": "ALT", "value": 68, "unit": "U/L", "ref_low": 7, "ref_high": 56, "date": "2026-11-02"},
+        {"test": "Potassium", "value": 3.1, "unit": "mmol/L", "ref_low": 3.5, "ref_high": 5.1, "date": "2026-11-02"},
+        {"test": "Sodium", "value": 139, "unit": "mmol/L", "ref_low": 135, "ref_high": 145, "date": "2026-11-02"}
+      ],
+      "genetics": {
+        "pgx": [{"gene": "HLA-B", "result": "HLA-B*57:01 positive"}],
+        "variants": [{"gene": "BRCA1", "hgvs_c": "c.68_69del"}]
+      }
+    },
+    {
+      "id": "p002",
+      "name": "Giorgi Demo (fictional)",
+      "age": 64,
+      "sex": "M",
+      "conditions": ["Type 2 diabetes", "Asthma", "Coronary stent"],
+      "medications": [
+        {"name": "Metformin", "dose": "1000 mg twice daily"},
+        {"name": "Prednisone", "dose": "10 mg once daily"},
+        {"name": "Lisinopril", "dose": "10 mg once daily"},
+        {"name": "Spironolactone", "dose": "25 mg once daily"},
+        {"name": "Biotin", "dose": "5 mg once daily (supplement)"},
+        {"name": "Clopidogrel", "dose": "75 mg once daily"}
+      ],
+      "allergies": [],
+      "labs": [
+        {"test": "Vitamin B12", "value": 150, "unit": "pg/mL", "ref_low": 200, "ref_high": 900, "date": "2026-11-10"},
+        {"test": "Glucose", "value": 182, "unit": "mg/dL", "ref_low": 70, "ref_high": 99, "date": "2026-11-10"},
+        {"test": "Potassium", "value": 5.6, "unit": "mmol/L", "ref_low": 3.5, "ref_high": 5.1, "date": "2026-11-10"},
+        {"test": "White blood cell count", "value": 12.4, "unit": "10^9/L", "ref_low": 4.0, "ref_high": 11.0, "date": "2026-11-10"},
+        {"test": "TSH", "value": 0.2, "unit": "mIU/L", "ref_low": 0.4, "ref_high": 4.0, "date": "2026-11-10"},
+        {"test": "CK", "value": 410, "unit": "U/L", "ref_low": 30, "ref_high": 200, "date": "2026-11-10"}
+      ],
+      "genetics": {
+        "pgx": [{"gene": "CYP2C19", "result": "Poor metabolizer"}],
+        "variants": [{"gene": "BRCA1", "hgvs_c": "c.4402A>G"}]
+      }
+    }
+  ]
+}

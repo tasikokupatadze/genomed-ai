@@ -1,0 +1,7 @@
+{
+  "_comment": "Score thresholds for the three bands. Leave null until pipeline/validate.py has calibrated them against ClinVar. While null, the app shows 'AI estimate unavailable'.",
+  "leans_disruptive_at_or_below": null,
+  "leans_tolerated_at_or_above": null,
+  "calibrated_by": null,
+  "calibrated_on": null
+}

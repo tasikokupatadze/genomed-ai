@@ -1,0 +1,12 @@
+drug,drug_class,source_url,reviewed_by
+atorvastatin,statin,,
+simvastatin,statin,,
+rosuvastatin,statin,,
+furosemide,loop diuretic,,
+hydrochlorothiazide,thiazide diuretic,,
+lisinopril,ACE inhibitor,,
+enalapril,ACE inhibitor,,
+prednisone,corticosteroid,,
+biotin,biotin supplement,,
+capecitabine,fluoropyrimidine,,
+fluorouracil,fluoropyrimidine,,

@@ -1,0 +1,52 @@
+import "server-only";
+import { existsSync, readFileSync, writeFileSync, mkdirSync } from "node:fs";
+import os from "node:os";
+import path from "node:path";
+import { DATA_DIR, readJson } from "./data";
+import type { Patient } from "./types";
+
+/**
+ * Demo store. Reads data/demo_patients.json and keeps edits in a JSON overlay file.
+ * Locally the overlay is data/state.json (git-ignored).
+ * On Vercel the project folder is read-only, so the overlay goes to /tmp: edits survive
+ * while that server instance is warm, then reset to the demo data. Fine for a demo.
+ */
+const STATE_FILE = process.env.VERCEL
+  ? path.join(os.tmpdir(), "genomed-state.json")
+  : path.join(DATA_DIR, "state.json");
+
+type State = Record<string, Patient>;
+
+function load(): State {
+  const base = readJson<{ patients: Patient[] }>("demo_patients.json").patients;
+  const state: State = Object.fromEntries(base.map((p) => [p.id, structuredClone(p)]));
+  if (existsSync(STATE_FILE)) {
+    try {
+      Object.assign(state, JSON.parse(readFileSync(STATE_FILE, "utf-8")) as State);
+    } catch {
+      /* corrupt overlay: fall back to demo data */
+    }
+  }
+  return state;
+}
+
+function save(state: State) {
+  mkdirSync(path.dirname(STATE_FILE), { recursive: true });
+  writeFileSync(STATE_FILE, JSON.stringify(state, null, 2));
+}
+
+export const listPatients = (): Patient[] => Object.values(load());
+export const getPatient = (id: string): Patient | null => load()[id] ?? null;
+
+export function updatePatient(id: string, change: (p: Patient) => void): Patient | null {
+  const state = load();
+  const p = state[id];
+  if (!p) return null;
+  change(p);
+  save(state);
+  return p;
+}
+
+export function resetDemo() {
+  save({});
+}
