@@ -1,6 +1,11 @@
 export type Lang = "en" | "ka";
 
-export interface Medication { name: string; dose: string }
+export interface Medication {
+  name: string;
+  dose: string;
+  start_date: string; // YYYY-MM-DD
+  end_date?: string;  // YYYY-MM-DD, optional
+}
 export interface Allergy { drug: string; reaction: string }
 export interface LabResult {
   test: string;
@@ -8,7 +13,7 @@ export interface LabResult {
   unit: string;
   ref_low: number; // from the patient's own lab report
   ref_high: number;
-  date?: string;
+  date: string; // YYYY-MM-DD, required
 }
 export interface PgxResult { gene: string; result: string }
 export interface VariantResult { gene: string; hgvs_c: string }
@@ -18,7 +23,32 @@ export interface ApprovedSummary {
   patient_summary: string;
   patient_questions: string[];
   medication_notes: string[];
+  /** Snapshot of the charts at approval time, so later data changes never reach the patient unapproved. */
+  trends?: LabTrend[];
   approved_at: string;
+}
+
+export interface TrendEntry {
+  date: string;
+  value: number;
+  unit: string;
+  ref_low: number;
+  ref_high: number;
+  status: "in_range" | "below" | "above";
+}
+export interface TrendMedication {
+  name: string;
+  start_date: string;
+  end_date?: string;
+  linked: boolean; // linked to this test in data/drug_lab_effects.csv
+}
+export interface LabTrend {
+  test: string;              // canonical test name
+  entries: TrendEntry[];     // sorted by date
+  units: string[];           // distinct units; more than one means "don't plot together"
+  ranges_differ: boolean;
+  medications: TrendMedication[];
+  notes?: string[];          // doctor-approved "one possible reason" lines (patient view only)
 }
 
 export interface Patient {
@@ -32,12 +62,14 @@ export interface Patient {
   labs: LabResult[];
   genetics: { pgx: PgxResult[]; variants: VariantResult[] };
   approved?: Partial<Record<Lang, ApprovedSummary>>;
+  demo?: boolean;
 }
 
 // ---- findings ----
 export interface LabMedFinding {
   kind: "lab_medication";
   lab: LabResult;
+  canonical_test: string;
   direction: "high" | "low";
   medication: string;
   matched_on: string; // drug name or drug class
@@ -48,6 +80,7 @@ export interface LabMedFinding {
 export interface LabUnexplainedFinding {
   kind: "lab_unexplained";
   lab: LabResult;
+  canonical_test: string;
   direction: "high" | "low";
 }
 export interface AllergyFinding {

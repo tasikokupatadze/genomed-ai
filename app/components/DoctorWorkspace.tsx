@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { checkOutput, type CheckResult } from "@/lib/checkOutput";
 import type { Dict } from "@/lib/translations";
-import type { DraftSummary, Finding, Lang, Patient } from "@/lib/types";
+import type { DraftSummary, Finding, Lang, LabTrend, Patient } from "@/lib/types";
 import Findings from "./Findings";
 
 interface AnalyzeResponse {
@@ -22,9 +22,9 @@ const btn = "rounded-md bg-teal-700 px-3 py-1.5 text-sm font-medium text-white h
 const panel = "rounded-xl bg-white p-4 shadow-sm";
 
 export default function DoctorWorkspace({
-  patient, findings, lang, d, labTests, pgxOptions,
+  patient, findings, trends, lang, d, labTests, pgxOptions,
 }: {
-  patient: Patient; findings: Finding[]; lang: Lang; d: Dict;
+  patient: Patient; findings: Finding[]; trends: LabTrend[]; lang: Lang; d: Dict;
   labTests: string[]; pgxOptions: { gene: string; result: string }[];
 }) {
   const router = useRouter();
@@ -86,13 +86,15 @@ export default function DoctorWorkspace({
           <section className={panel}>
             <h2 className="font-semibold">{d.medications}</h2>
             <ul className="mt-2 space-y-1 text-sm">
-              {patient.medications.map((m, i) => <li key={i}><b>{m.name}</b> <span className="text-slate-600">{m.dose}</span></li>)}
+              {patient.medications.map((m, i) => <li key={i}><b>{m.name}</b> <span className="text-slate-600">{m.dose}</span> <span className="text-xs text-slate-500">· {d.started} {m.start_date ?? "?"}{m.end_date ? ` · ${d.stopped} ${m.end_date}` : ""}</span></li>)}
               {!patient.medications.length && <li className="text-slate-500">{d.none}</li>}
             </ul>
-            <form onSubmit={submit(`${base}/medications`, ["name", "dose"])} className="mt-3 grid grid-cols-[1fr_1fr_auto] gap-2">
+            <form onSubmit={submit(`${base}/medications`, ["name", "dose", "start_date", "end_date"])} className="mt-3 grid grid-cols-2 gap-2">
               <input name="name" placeholder={d.name} required className={input} />
               <input name="dose" placeholder={d.dose} className={input} />
-              <button className={btn}>{d.add}</button>
+              <label className="text-xs text-slate-600">{d.startDate} *<input name="start_date" type="date" required className={input} /></label>
+              <label className="text-xs text-slate-600">{d.endDate}<input name="end_date" type="date" className={input} /></label>
+              <button className={`${btn} col-span-2 sm:col-span-1`}>{d.add}</button>
             </form>
           </section>
 
@@ -139,7 +141,7 @@ export default function DoctorWorkspace({
               <input name="unit" placeholder={d.unit} className={input} />
               <input name="ref_low" type="number" step="any" placeholder={`${d.refLow} *`} required className={input} />
               <input name="ref_high" type="number" step="any" placeholder={`${d.refHigh} *`} required className={input} />
-              <input name="date" type="date" className={input} />
+              <input name="date" type="date" required aria-label={d.date} className={input} />
               <p className="col-span-2 text-xs text-slate-500 sm:col-span-2">* {d.refRange}</p>
               <button className={btn}>{d.add}</button>
             </form>
@@ -176,7 +178,7 @@ export default function DoctorWorkspace({
         <div className="space-y-4">
           <section className={panel}>
             <h2 className="font-semibold">{d.findings}</h2>
-            <div className="mt-2"><Findings findings={findings} d={d} /></div>
+            <div className="mt-2"><Findings findings={findings} trends={trends} d={d} /></div>
           </section>
           <SummaryPanel key={lang} patient={patient} lang={lang} d={d} />
         </div>

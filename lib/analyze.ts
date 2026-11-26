@@ -5,7 +5,8 @@ import { checkPgx } from "./checks/pgx";
 import { checkVariants } from "./checks/variants";
 import { canonicalLab, contextFacts } from "./data";
 import { patientNotes } from "./translations";
-import type { Finding, Lang, Patient } from "./types";
+import { buildLabTrends } from "./checks/labs";
+import type { Finding, Lang, LabTrend, Patient } from "./types";
 
 export function runChecks(p: Patient): Finding[] {
   return [
@@ -84,4 +85,14 @@ export function buildLlmInput(p: Patient, findings: Finding[], lang: Lang) {
     gene_info,
     context_facts: [...facts],
   };
+}
+
+/** Trend charts with their template "one possible reason" lines, for the approved patient view. */
+export function approvedTrends(p: Patient, findings: Finding[], lang: Lang): LabTrend[] {
+  const n = patientNotes[lang];
+  return buildLabTrends(p).map((t) => ({
+    ...t,
+    notes: [...new Set(findings.flatMap((f) =>
+      f.kind === "lab_medication" && f.canonical_test === t.test ? [n.labMed(f.medication, t.test, f.direction)] : []))],
+  }));
 }

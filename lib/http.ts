@@ -10,3 +10,11 @@ export async function body(req: Request): Promise<Record<string, unknown>> {
     return {};
   }
 }
+
+/** Strict YYYY-MM-DD that is a real calendar date. */
+export function isoDate(v: unknown): string | null {
+  const s = str(v, 10);
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(s)) return null;
+  const d = new Date(s + "T00:00:00Z");
+  return !Number.isNaN(d.getTime()) && d.toISOString().slice(0, 10) === s ? s : null;
+}

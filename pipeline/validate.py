@@ -9,7 +9,7 @@ Calibration uses only scored rows in data/scores.csv and their ClinVar labels.
 Thresholds are written only on request, with the reviewer's name, and stay null
 if there is not enough data.
 """
-import argparse, csv, datetime as dt, json, sys
+import argparse, csv, datetime as dt, json, re, sys
 from pathlib import Path
 
 DATA = Path(__file__).resolve().parent.parent / "data"
@@ -65,10 +65,18 @@ def check_tables():
     print(f"brca1_clinvar.csv: {len(clin)} BRCA1 variants (GRCh37)")
 
     pts = json.load(open(DATA / "demo_patients.json", encoding="utf-8"))["patients"]
+    date_re = re.compile(r"^\d{4}-\d{2}-\d{2}$")
     for p in pts:
+        if not p.get("demo"):
+            problems.append(f"demo patient {p['id']}: must be marked \"demo\": true")
         for l in p["labs"]:
             if l.get("ref_low") is None or l.get("ref_high") is None:
                 problems.append(f"demo patient {p['id']}: {l['test']} has no reference range from the lab report")
+            if not date_re.match(str(l.get("date", ""))):
+                problems.append(f"demo patient {p['id']}: {l['test']} needs a YYYY-MM-DD date")
+        for m in p["medications"]:
+            if not date_re.match(str(m.get("start_date", ""))):
+                problems.append(f"demo patient {p['id']}: {m['name']} needs a YYYY-MM-DD start_date")
 
 
 def calibrate(write: bool, by: str | None):

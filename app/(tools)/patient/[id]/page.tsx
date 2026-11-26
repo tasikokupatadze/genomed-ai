@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { getLang } from "@/lib/i18n";
 import { t } from "@/lib/translations";
 import { getPatient } from "@/lib/store";
+import LabTrendChart from "@/app/components/LabTrendChart";
 
 export const dynamic = "force-dynamic";
 
@@ -34,6 +35,20 @@ export default async function PatientPage({ params }: PageProps<"/patient/[id]">
                   <li key={n} className="rounded-lg bg-sky-50 p-3 text-[15px]">{n}</li>
                 ))}
               </ul>
+            </section>
+          )}
+          {(a.trends ?? []).length > 0 && (
+            <section className="space-y-3 rounded-xl bg-white p-5 shadow-sm">
+              <h2 className="font-semibold">{d.trendsTitle}</h2>
+              {(a.trends ?? []).map((tr) => (
+                <div key={tr.test} className="space-y-2">
+                  <LabTrendChart trend={tr} d={d} />
+                  {(tr.notes ?? []).map((n) => (
+                    <p key={n} className="rounded-lg bg-sky-50 p-3 text-[15px]">{n}</p>
+                  ))}
+                  {(tr.notes ?? []).length > 0 && <p className="text-sm font-semibold text-slate-700">{d.possibleReasonNote}</p>}
+                </div>
+              ))}
             </section>
           )}
           <section className="rounded-xl bg-white p-5 shadow-sm">

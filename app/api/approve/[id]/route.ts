@@ -1,5 +1,5 @@
 import { getPatient, updatePatient } from "@/lib/store";
-import { buildLlmInput, medicationNotes, runChecks } from "@/lib/analyze";
+import { approvedTrends, buildLlmInput, medicationNotes, runChecks } from "@/lib/analyze";
 import { checkOutput } from "@/lib/checkOutput";
 import { bad, body, str } from "@/lib/http";
 import type { Lang } from "@/lib/types";
@@ -23,7 +23,9 @@ export async function POST(req: Request, ctx: RouteContext<"/api/approve/[id]">)
   const check = checkOutput({ patient_summary, patient_questions, medication_notes }, buildLlmInput(p, findings, lang), lang);
   if (!check.ok) return Response.json({ error: "Text breaks the patient-text rules", check_output: check }, { status: 422 });
 
-  const approved = { lang, patient_summary, patient_questions, medication_notes, approved_at: new Date().toISOString() };
+  // Charts are saved as they are now; later lab or medication edits do not reach the patient until re-approved.
+  const trends = approvedTrends(p, findings, lang);
+  const approved = { lang, patient_summary, patient_questions, medication_notes, trends, approved_at: new Date().toISOString() };
   updatePatient(id, (p) => { p.approved = { ...p.approved, [lang]: approved }; });
   return Response.json({ approved, check_output: check });
 }

@@ -82,3 +82,19 @@ Dates are kept apart: **report date** (lab issued the report), **evidence date**
 ## Broader vision
 
 GenoMed could later connect medical history, medications, supplements, allergies, lab results and pharmacogenomic findings. An earlier server-side prototype of these table-based checks is still in this repo at **`/doctor`** (`app/(tools)/`, `lib/checks/`, `data/`). It includes a real ClinVar BRCA1 table and an optional LLM draft that needs `ANTHROPIC_API_KEY`. The offline Evo 2 scoring and validation scripts are in `pipeline/` (see `pipeline/score_variants.py`; nothing has been scored yet). None of this is needed for the hackathon demo.
+
+### Lab results over time (in `/doctor`)
+
+For any lab test with 2 or more dated results, the doctor sees a Recharts line chart next to the related finding
+(`app/components/LabTrendChart.tsx`, data from `buildLabTrends()` in `lib/checks/labs.ts`):
+
+- **Line and dots:** dots outside each report's own range are red triangles (down = below, up = above).
+- **Normal range:** the shaded band uses the most recent report's range. If ranges differ, the chart notes "Reference ranges differ between labs."
+- **Medication markers:** a dashed vertical line marks each medication's `start_date`. By default only medications linked to that test in `data/drug_lab_effects.csv` are marked; "Show all medications" shows every start date.
+- **Mixed units:** results in different units are never plotted together; a message is shown instead.
+- **Table:** an accessible table of the same values sits under every chart.
+
+The patient sees the chart only after the doctor approves. It is saved with the approval, together with the "one possible reason – ask your doctor" lines. The chart shows timing only, never cause.
+Demo: Nino (`p001`) has three fictional potassium results: in range before furosemide started, then below range after.
+Lab entries need a `date` and medications a `start_date` (YYYY-MM-DD); `end_date` is optional.
+

@@ -1,4 +1,5 @@
-import type { Finding } from "@/lib/types";
+import type { Finding, LabTrend } from "@/lib/types";
+import LabTrendChart from "./LabTrendChart";
 import type { Dict } from "@/lib/translations";
 
 const Source = ({ url, reviewed, d }: { url: string; reviewed?: string; d: Dict }) => (
@@ -24,10 +25,20 @@ const Card = ({ tone, title, children }: { tone: "red" | "amber" | "sky" | "slat
   );
 };
 
-export default function Findings({ findings, d }: { findings: Finding[]; d: Dict }) {
+const sameTest = (a: string, b: string) => a.trim().toLowerCase() === b.trim().toLowerCase();
+
+export default function Findings({ findings, trends = [], d }: { findings: Finding[]; trends?: LabTrend[]; d: Dict }) {
+  // Each trend chart is shown once, right after the first finding about the same test.
+  const shown = new Set<string>();
+  const chartFor = (test: string) => {
+    const t = trends.find((x) => sameTest(x.test, test));
+    if (!t || shown.has(t.test)) return null;
+    shown.add(t.test);
+    return <LabTrendChart trend={t} d={d} />;
+  };
   const unchecked = findings.filter((f) => f.kind === "allergy_unchecked");
   const main = findings.filter((f) => f.kind !== "allergy_unchecked");
-  if (!main.length && !unchecked.length) return <p className="text-sm text-slate-500">{d.noFindings}</p>;
+  if (!main.length && !unchecked.length && !trends.length) return <p className="text-sm text-slate-500">{d.noFindings}</p>;
 
   return (
     <div className="space-y-2">
@@ -57,22 +68,22 @@ export default function Findings({ findings, d }: { findings: Finding[]; d: Dict
             );
           case "lab_medication":
             return (
-              <Card key={i} tone="amber" title={`${f.lab.test} ${d[f.direction]} · ${d.onePossibleReason}`}>
+              <div key={i} className="space-y-2"><Card tone="amber" title={`${f.lab.test} ${d[f.direction]} · ${d.onePossibleReason}`}>
                 <p>
                   {f.lab.test}: <b>{f.lab.value} {f.lab.unit}</b> ({d.refRange}: {f.lab.ref_low}–{f.lab.ref_high})
                 </p>
                 <p className="text-slate-700"><b>{f.medication}</b> — {f.effect_description}</p>
                 <Source url={f.source_url} reviewed={f.reviewed_by} d={d} />
-              </Card>
+              </Card>{chartFor(f.canonical_test)}</div>
             );
           case "lab_unexplained":
             return (
-              <Card key={i} tone="slate" title={`${f.lab.test} ${d[f.direction]}`}>
+              <div key={i} className="space-y-2"><Card tone="slate" title={`${f.lab.test} ${d[f.direction]}`}>
                 <p>
                   {f.lab.test}: <b>{f.lab.value} {f.lab.unit}</b> ({d.refRange}: {f.lab.ref_low}–{f.lab.ref_high})
                 </p>
                 <p className="text-slate-600">{d.noMedLink}</p>
-              </Card>
+              </Card>{chartFor(f.canonical_test)}</div>
             );
           case "variant":
             return (
@@ -96,6 +107,12 @@ export default function Findings({ findings, d }: { findings: Finding[]; d: Dict
             );
         }
       })}
+      {trends.filter((t) => !shown.has(t.test)).length > 0 && (
+        <div className="space-y-2 pt-2">
+          <p className="text-xs font-semibold uppercase tracking-wide text-slate-600">{d.trendsTitle}</p>
+          {trends.filter((t) => !shown.has(t.test)).map((t) => <LabTrendChart key={t.test} trend={t} d={d} />)}
+        </div>
+      )}
       {unchecked.length > 0 && (
         <p className="text-xs text-slate-500">
           {d.allergyUnchecked}: {unchecked.map((u) => u.kind === "allergy_unchecked" && u.medication).join(", ")}
