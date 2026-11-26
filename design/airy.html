@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<style>
+@font-face{font-family:Inter;font-weight:400;src:url(node_modules/@fontsource/inter/files/inter-latin-400-normal.woff2)}
+@font-face{font-family:Inter;font-weight:500;src:url(node_modules/@fontsource/inter/files/inter-latin-500-normal.woff2)}
+@font-face{font-family:Inter;font-weight:600;src:url(node_modules/@fontsource/inter/files/inter-latin-600-normal.woff2)}
+@font-face{font-family:Geo;font-weight:400;src:url(node_modules/@fontsource/noto-sans-georgian/files/noto-sans-georgian-georgian-400-normal.woff2)}
+@font-face{font-family:Geo;font-weight:600;src:url(node_modules/@fontsource/noto-sans-georgian/files/noto-sans-georgian-georgian-600-normal.woff2)}
+@font-face{font-family:JBM;font-weight:400;src:url(node_modules/@fontsource/jetbrains-mono/files/jetbrains-mono-latin-400-normal.woff2)}
+@font-face{font-family:JBM;font-weight:500;src:url(node_modules/@fontsource/jetbrains-mono/files/jetbrains-mono-latin-500-normal.woff2)}
+:root{
+  --canvas:#F5F5F3;--white:#FFFFFF;--title:#18191B;--body:#374151;--meta:#6B7280;
+  --hair:#EAECEF;--edge:#E5E7EB;--btn-edge:#D1D5DB;
+  --spruce:#1C443D;--spruce2:#234E45;--spruce-t:#EEF3F1;
+  --amb:#92400E;--amb-bg:#FEF3C7;--rose:#991B1B;--rose-bg:#FEE2E2;--sage:#166534;--sage-bg:#DCFCE7;--ice:#1E40AF;--ice-bg:#DBEAFE;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--canvas);color:var(--body);font:14px/1.55 Inter,Geo,sans-serif;letter-spacing:-.011em;width:1440px}
+.mono{font-family:JBM,monospace;font-variant-numeric:tabular-nums;letter-spacing:0}
+.ka{font-family:Geo,Inter,sans-serif;letter-spacing:0}
+h1,h2,h3{color:var(--title);letter-spacing:-.02em}
+/* top bar */
+.top{height:56px;background:var(--white);border-bottom:1px solid var(--hair);display:flex;align-items:center;padding:0 32px;gap:36px}
+.logo{font-weight:600;font-size:15px;color:var(--title);letter-spacing:-.02em;display:flex;align-items:center;gap:8px}
+.logo i{width:9px;height:9px;background:var(--spruce);border-radius:2px;display:inline-block}
+.nav{display:flex;gap:28px;height:56px}
+.nav a{display:flex;align-items:center;color:var(--meta);font-weight:500;font-size:13.5px;text-decoration:none;border-bottom:2px solid transparent}
+.nav a.on{color:var(--title);border-bottom-color:var(--spruce)}
+.search{flex:1;max-width:340px;margin-left:auto;height:34px;border:1px solid var(--edge);border-radius:6px;display:flex;align-items:center;gap:8px;padding:0 12px;color:#9CA3AF;font-size:13px;background:#FAFAF9}
+.search svg{width:14px;height:14px}
+.lang{font-size:12.5px;color:var(--meta)}.lang b{color:var(--title);font-weight:600}
+.avatar{width:30px;height:30px;border-radius:50%;background:var(--spruce-t);color:var(--spruce);font-weight:600;font-size:11.5px;display:grid;place-items:center}
+/* layout */
+.grid{display:grid;grid-template-columns:22% 1fr 24%;gap:24px;padding:28px 32px 32px}
+.label{font-size:11px;font-weight:600;color:var(--meta);text-transform:uppercase;letter-spacing:.09em}
+.pill{display:inline-flex;align-items:center;font-size:11.5px;font-weight:500;padding:2px 9px;border-radius:999px;white-space:nowrap;letter-spacing:0}
+.amb{color:var(--amb);background:var(--amb-bg)}.rose{color:var(--rose);background:var(--rose-bg)}
+.sage{color:var(--sage);background:var(--sage-bg)}.ice{color:var(--ice);background:var(--ice-bg)}
+.grey{color:var(--body);background:#F1F2F4}
+/* left feed */
+.feedhead{display:flex;justify-content:space-between;align-items:baseline;padding:0 4px 12px}
+.feed{background:var(--white);border-radius:8px;border:1px solid var(--edge)}
+.item{padding:16px 18px;border-bottom:1px solid var(--hair);position:relative}
+.item:last-child{border-bottom:0}
+.item.sel{background:#F7F9F8}.item.sel:before{content:"";position:absolute;left:0;top:14px;bottom:14px;width:2px;background:var(--spruce);border-radius:2px}
+.item.hov{background:#FAFAF9}
+.item .t{font-weight:600;color:var(--title);font-size:14px}
+.item .m{font-size:12.5px;color:var(--meta);margin:3px 0 9px}
+.item .r{display:flex;gap:6px;flex-wrap:wrap}
+.side-note{margin-top:24px;padding:0 4px}
+.side-note p{font-size:13px;color:var(--body);margin-top:8px}
+.toggle{display:flex;gap:10px;align-items:flex-start;margin-top:10px;font-size:13px;color:var(--body)}
+.sw{width:30px;height:18px;border-radius:999px;background:var(--spruce);position:relative;flex:none;margin-top:1px}
+.sw:after{content:"";position:absolute;right:2px;top:2px;width:14px;height:14px;border-radius:50%;background:#fff}
+/* center */
+.work{background:var(--white);border-radius:8px;border:1px solid var(--edge);padding:32px 36px}
+.crumbs{font-size:12.5px;color:var(--meta)}
+.work h1{font-size:26px;font-weight:600;margin-top:10px;line-height:1.25}
+.work h1 .mono{font-size:23px;font-weight:500}
+.metap{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.metap .pill{font-size:12px}
+.who{margin-top:14px;font-size:13.5px;color:var(--body)}
+.who b{color:var(--title);font-weight:600}
+.block{margin-top:36px}
+.bh{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px}
+.bh h2{font-size:16px;font-weight:600}.bh span{font-size:12.5px;color:var(--meta)}
+table{width:100%;border-collapse:collapse}
+th{font-size:11px;font-weight:600;color:var(--meta);text-transform:uppercase;letter-spacing:.09em;text-align:left;padding:0 20px 10px 0;border-bottom:1px solid var(--hair)}
+td{padding:14px 20px 14px 0;border-bottom:1px solid var(--hair);vertical-align:top;font-size:14px;color:var(--title)}
+td:first-child{color:var(--meta);width:24%;font-size:13.5px}
+td small{display:block;color:var(--meta);font-size:12px;margin-top:2px}
+tr.chg td{background:#FFFBEB}
+tr.chg td:first-child{box-shadow:inset 2px 0 0 #B45309;padding-left:14px;color:var(--amb);font-weight:500}
+.same{font-size:11.5px;color:#9CA3AF;margin-left:6px}
+.decide{display:flex;gap:12px}
+.choice{flex:1;border:1px solid var(--edge);border-radius:6px;padding:14px 16px;font-size:14px;color:var(--body);display:flex;gap:10px;align-items:center}
+.choice.on{border-color:var(--spruce);background:var(--spruce-t);color:var(--title);font-weight:500}
+.rb{width:15px;height:15px;border-radius:50%;border:1px solid var(--btn-edge);flex:none}
+.choice.on .rb{border:5px solid var(--spruce)}
+.twin{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.lc{border:1px solid var(--edge);border-radius:8px;padding:18px 20px;background:var(--white)}
+.lc.focus{border-color:var(--spruce);box-shadow:0 0 0 3px rgba(28,68,61,.08)}
+.lc .lh{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.lc .lh b{font-size:12.5px;font-weight:600;color:var(--meta)}
+.lc p{font-size:14px;line-height:1.65;color:var(--body)}
+.lc p.ka{font-size:14px;line-height:1.8}
+.actions{display:flex;gap:10px;align-items:center;margin-top:32px;padding-top:24px;border-top:1px solid var(--hair)}
+.b{padding:10px 18px;border-radius:6px;font-weight:500;font-size:14px;border:1px solid var(--btn-edge);background:var(--white);color:var(--title)}
+.b.p{background:var(--spruce);border-color:var(--spruce);color:#fff}
+.b.q{border-color:transparent;color:var(--rose);background:transparent}
+.actions small{margin-left:auto;font-size:12.5px;color:var(--meta)}
+/* right */
+.card{background:var(--white);border:1px solid var(--edge);border-radius:8px;padding:22px 24px}
+.card+.card{margin-top:24px}
+.card h3{font-size:15px;font-weight:600;margin-top:6px}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:9px 16px;margin-top:14px;font-size:13.5px}
+.kv dt{color:var(--meta)}.kv dd{color:var(--title);text-align:right}
+.big{font-family:JBM,monospace;font-variant-numeric:tabular-nums;font-size:30px;font-weight:500;color:var(--title);letter-spacing:-.02em;line-height:1.1}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+.stats .s small{display:block;font-size:12px;color:var(--meta);margin-top:4px}
+.scale{position:relative;height:4px;background:#EEF0F2;border-radius:2px;margin-top:16px}
+.scale i{position:absolute;left:0;top:0;bottom:0;width:71%;background:var(--spruce2);border-radius:2px}
+.scale u{position:absolute;left:50%;top:-4px;bottom:-4px;width:1px;background:#9CA3AF}
+.scale-l{display:flex;justify-content:space-between;font-size:11px;color:#9CA3AF;margin-top:6px}
+.msg{margin-top:14px;padding:14px 16px;background:#FAFAF9;border-radius:6px;font-size:13.5px;color:var(--body);line-height:1.6}
+.foot{display:flex;justify-content:space-between;padding:0 32px 24px;font-size:12px;color:#9CA3AF}
+</style></head>
+<body>
+<header class="top">
+  <div class="logo"><i></i>GenoMed AI</div>
+  <nav class="nav"><a>Patients</a><a class="on">Reviews</a><a>Research</a></nav>
+  <div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>Search patient, variant or gene</div>
+  <div class="lang"><b>EN</b> · <span class="ka">ქართ</span></div>
+  <div class="avatar">ND</div>
+</header>
+
+<main class="grid">
+  <!-- LEFT: review feed -->
+  <aside>
+    <div class="feedhead"><span class="label">Review feed</span><span style="font-size:12.5px;color:var(--meta)">3 open</span></div>
+    <div class="feed">
+      <div class="item sel"><div class="t">Reclassification proposed</div><div class="m">Nino Beridze · <span class="mono">REV-0003</span></div>
+        <div class="r"><span class="pill amb">Needs review</span><span class="pill rose">Toward pathogenic</span></div></div>
+      <div class="item hov"><div class="t">Possible biotin interference</div><div class="m">Davit Kapanadze · <span class="mono">REV-0004</span></div>
+        <div class="r"><span class="pill amb">Needs review</span><span class="pill grey">TSH low</span></div></div>
+      <div class="item"><div class="t">Reclassification shared</div><div class="m">Nino Beridze · <span class="mono">REV-0001</span></div>
+        <div class="r"><span class="pill sage">Approved</span><span class="pill ice">Auto · standing</span></div></div>
+      <div class="item"><div class="t">Evidence ignored</div><div class="m">Other variant · <span class="mono">EV-DEMO-A</span></div>
+        <div class="r"><span class="pill grey">No action</span></div></div>
+    </div>
+    <div class="side-note">
+      <span class="label">Standing instruction</span>
+      <div class="toggle"><span class="sw"></span><span>Share <b style="color:var(--title);font-weight:600">uncertain → benign</b> changes for Nino automatically</span></div>
+      <p style="color:var(--meta);font-size:12.5px">Changes toward pathogenic always come to you first.</p>
+    </div>
+  </aside>
+
+  <!-- CENTER: workbench -->
+  <section class="work">
+    <div class="crumbs">Reviews / Nino Beridze / <span class="mono">REV-0003</span></div>
+    <h1>New evidence for <span class="mono">SYN-VAR-000117</span></h1>
+    <div class="metap"><span class="pill grey mono">GNMD1</span><span class="pill grey mono">c.1847G&gt;A</span><span class="pill grey mono">SYN-COND-0042</span><span class="pill amb">Needs review</span><span class="pill grey">Demo data</span></div>
+    <div class="who"><b>Nino Beridze</b> · 29 · Report <span class="mono">GR-DEMO-2026-0314</span> · received 26 Nov 2026</div>
+
+    <div class="block">
+      <div class="bh"><h2>What changed</h2><span>Same variant and condition · classification differs</span></div>
+      <table>
+        <tr><th></th><th>Original · <span class="mono">14 Mar 2026</span></th><th>New evidence · <span class="mono">12 Nov 2026</span></th></tr>
+        <tr><td>Gene</td><td class="mono">GNMD1</td><td class="mono">GNMD1<span class="same">same</span></td></tr>
+        <tr><td>Variant</td><td><span class="mono">SYN-VAR-000117</span><small class="mono">c.1847G&gt;A</small></td><td><span class="mono">SYN-VAR-000117</span><span class="same">same</span><small class="mono">c.1847G&gt;A</small></td></tr>
+        <tr><td>Condition</td><td>Hereditary heart rhythm condition<small class="mono">SYN-COND-0042</small></td><td>Hereditary heart rhythm condition<span class="same">same</span><small class="mono">SYN-COND-0042</small></td></tr>
+        <tr class="chg"><td>Classification<small style="color:var(--amb);font-weight:500">changed</small></td><td><span class="pill amb">Uncertain significance</span></td><td><span class="pill rose">Likely pathogenic</span></td></tr>
+        <tr><td>Source</td><td>Demo Genomics Lab<small>single submitter</small></td><td>Demo Clinical Lab B<small>second source · conflicts with an earlier update</small></td></tr>
+      </table>
+    </div>
+
+    <div class="block">
+      <div class="bh"><h2>Your decision</h2><span>Required before sharing</span></div>
+      <div class="decide"><div class="choice on"><span class="rb"></span>Recommend a follow-up visit</div><div class="choice"><span class="rb"></span>No follow-up needed</div></div>
+    </div>
+
+    <div class="block">
+      <div class="bh"><h2>Message to the patient</h2><span>Both languages checked</span></div>
+      <div class="twin">
+        <div class="lc focus"><div class="lh"><b>English</b><span class="pill sage">Up to date</span></div>
+          <p>There is new information about your genetic result. A second laboratory reviewed the same DNA change in your <span class="mono">GNMD1</span> gene and now classifies it as likely pathogenic. Your original report is unchanged. I would like to see you to talk through what this means.</p></div>
+        <div class="lc"><div class="lh"><b class="ka">ქართული</b><span class="pill sage">Up to date</span></div>
+          <p class="ka">თქვენი გენეტიკური შედეგის შესახებ ახალი ინფორმაცია გვაქვს. მეორე ლაბორატორიამ განიხილა იგივე დნმ-ის ცვლილება თქვენს <span class="mono">GNMD1</span> გენში და ახლა მას სავარაუდოდ პათოგენურად აფასებს. თქვენი თავდაპირველი ანგარიში არ შეცვლილა.</p></div>
+      </div>
+    </div>
+
+    <div class="actions"><span class="b p">Approve and share</span><span class="b">Preview as patient</span><span class="b q">Dismiss</span><small>Original report preserved</small></div>
+  </section>
+
+  <!-- RIGHT: context -->
+  <aside>
+    <div class="card">
+      <span class="label">Patient</span>
+      <h3>Nino Beridze <span style="color:var(--meta);font-weight:400">(fictional)</span></h3>
+      <dl class="kv">
+        <dt>Age</dt><dd>29</dd>
+        <dt>Report</dt><dd class="mono">14 Mar 2026</dd>
+        <dt>Preferred language</dt><dd class="ka">ქართული</dd>
+        <dt>Last message</dt><dd>21 Nov 2026</dd>
+      </dl>
+      <div class="msg">Last shared: “New expert evidence now classifies the change as likely benign.” <span class="pill ice" style="margin-left:4px">Auto</span></div>
+    </div>
+
+    <div class="card">
+      <span class="label">Research · Evo 2</span>
+      <h3>Model vs expert classifications</h3>
+      <p style="font-size:13px;color:var(--meta);margin-top:4px">120 BRCA1 missense variants · <span class="mono">arc/evo2-7b</span></p>
+      <div class="stats">
+        <div class="s"><div class="big">0.71</div><small>AUROC, test half</small></div>
+        <div class="s"><div class="big">67%</div><small>agreement, 40 of 60</small></div>
+      </div>
+      <div class="scale"><i></i><u></u></div>
+      <div class="scale-l mono"><span>0.5 chance</span><span>1.0 perfect</span></div>
+      <p style="margin-top:14px"><span class="pill ice">Research only · never shown to patients</span></p>
+    </div>
+  </aside>
+</main>
+<div class="foot"><span>Decision support only · Not a diagnosis · Fictional demo data</span><span>GenoMed AI</span></div>
+</body></html>

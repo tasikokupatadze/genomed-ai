@@ -29,7 +29,7 @@ export default function DemoControls({ s, T }: { s: DemoState; T: Text }) {
   );
 
   return (
-    <div className="rounded-2xl border-2 border-dashed border-violet-500 bg-violet-50 p-4 text-violet-950">
+    <div className="rounded-lg border border-dashed border-violet-300 bg-violet-50 p-5 text-violet-950">
       <div className="flex items-center gap-2">
         <span className="rounded bg-violet-700 px-2 py-0.5 text-xs font-bold uppercase tracking-wide text-white">{T.demoControls}</span>
       </div>
@@ -61,7 +61,7 @@ export default function DemoControls({ s, T }: { s: DemoState; T: Text }) {
       </div>
 
       {ev && evUpdate && (
-        <div className="mt-4 rounded-xl border border-violet-300 bg-white p-3 text-sm" role="status" aria-live="polite">
+        <div className="mt-4 rounded-lg border border-violet-300 bg-white p-3 text-sm" role="status" aria-live="polite">
           <p className="text-xs font-bold uppercase tracking-wide text-violet-700">{T.lastResult}</p>
           <p className="font-semibold">{evUpdate.controlTitle[lang]}</p>
           {ev.duplicate && <p className="mt-1 rounded bg-amber-100 p-2 font-semibold text-amber-950">⟳ {T.duplicate}</p>}

@@ -20,7 +20,7 @@ export default function ResearchView({ T }: { T: Text }) {
         <h1 className="text-2xl font-bold">{T.researchTitle}</h1>
         <h2 className="mt-4 text-sm font-semibold uppercase tracking-wide text-slate-500">{T.researchQuestion}</h2>
         <p className="mt-1 text-lg">{T.researchQuestionText}</p>
-        <div className={`mt-4 flex flex-wrap items-center gap-3 rounded-xl border-2 p-4 ${done ? "border-emerald-600 bg-emerald-50" : "border-slate-400 bg-slate-50"}`}>
+        <div className={`mt-4 flex flex-wrap items-center gap-3 rounded-lg border p-4 ${done ? "border-green-200 bg-green-50" : "border-edge bg-canvas"}`}>
           <span className="text-sm font-semibold uppercase tracking-wide text-slate-600">{T.researchStatus}</span>
           <span className="rounded-full border border-slate-500 bg-white px-3 py-1 font-bold">
             {done ? `✓ ${T.researchStatusDone}` : `○ ${T.researchStatusText}`}
@@ -98,17 +98,17 @@ function Results({ r, T, cols }: { r: Extract<typeof RESULTS, { status: "complet
     <section className={card}>
       <h2 className="text-lg font-bold">{T.researchResults}</h2>
       <div className="mt-3 grid gap-3 sm:grid-cols-3">
-        <div className="rounded-xl bg-slate-50 p-3">
+        <div className="rounded-md bg-canvas p-4">
           <p className="text-xs font-semibold uppercase text-slate-600">{T.researchAuroc}</p>
           <p className="text-2xl font-bold">{r.auroc_test.toFixed(2)}</p>
           <p className="text-xs text-slate-600">{T.researchCi}: {r.auroc_test_ci95[0].toFixed(2)}–{r.auroc_test_ci95[1].toFixed(2)} · {T.researchAurocHelp}</p>
         </div>
-        <div className="rounded-xl bg-slate-50 p-3">
+        <div className="rounded-md bg-canvas p-4">
           <p className="text-xs font-semibold uppercase text-slate-600">{T.researchAgreement}</p>
           <p className="text-2xl font-bold">{Math.round(r.test_agreement * 100)}% <span className="text-base font-normal">({Math.round(r.test_agreement * r.n_test)}/{r.n_test})</span></p>
           <p className="text-xs text-slate-600">{T.researchCutoff}: {r.cutoff}</p>
         </div>
-        <div className="rounded-xl bg-slate-50 p-3">
+        <div className="rounded-md bg-canvas p-4">
           <p className="text-xs font-semibold uppercase text-slate-600">{T.researchScored}</p>
           <p className="text-2xl font-bold">{r.n_scored}</p>
           <p className="text-xs text-slate-600">{r.n_failed} {T.researchFailedN}</p>

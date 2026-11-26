@@ -19,13 +19,13 @@ export default function ClinicianView({ s, T }: { s: DemoState; T: Text }) {
         <section className={card} aria-labelledby="queue-title">
           <h1 id="queue-title" className="text-lg font-bold">{T.reviewQueue}</h1>
           {!reviews.length && <p className="mt-2 text-sm text-slate-600">{T.emptyQueue}</p>}
-          <ul className="mt-2 space-y-2">
+          <ul className="-mx-6 mt-3 divide-y divide-hair border-y border-hair">
             {reviews.map((r) => (
               <li key={r.id}>
                 <button
                   onClick={() => dispatch({ type: "selectReview", reviewId: r.id })}
                   aria-current={selected?.id === r.id}
-                  className={`w-full rounded-xl border p-3 text-left transition ${selected?.id === r.id ? "border-teal-600 bg-teal-50 ring-2 ring-teal-600" : "border-slate-200 bg-white hover:bg-slate-50"}`}
+                  className={`w-full px-6 py-3.5 text-left transition ${selected?.id === r.id ? "bg-teal-50/60 shadow-[inset_2px_0_0_var(--color-teal-700)]" : "bg-white hover:bg-canvas"}`}
                 >
                   <span className="block text-sm font-bold">{r.kind === "genetic" ? T.geneticReview : T.biotinReview}</span>
                   <span className="block text-xs text-slate-600">{PATIENTS[r.patientId].name[lang]} · <Mono>{r.id}</Mono></span>
@@ -116,17 +116,17 @@ function GeneticComparison({ r, lang, T }: { r: Review; lang: Lang; T: Text }) {
             {rows.map((row) => {
               const changed = row.field ? diff.has(row.field) : false;
               return (
-                <tr key={row.key} className={changed ? "bg-amber-100" : ""}>
-                  <th scope="row" className="border-t border-slate-200 p-2 text-left align-top font-semibold text-slate-700">
+                <tr key={row.key} className={changed ? "bg-amber-50" : ""}>
+                  <th scope="row" className={`border-t border-hair px-2 py-3 text-left align-top font-medium text-gray-500 ${changed ? "shadow-[inset_2px_0_0_#b45309]" : ""}`}>
                     {row.label}
                     {row.field && (
-                      <span className={`mt-1 block w-fit rounded px-1.5 text-[11px] font-bold uppercase ${changed ? "bg-amber-500 text-white" : "bg-slate-200 text-slate-700"}`}>
+                      <span className={`mt-1 block w-fit rounded-full px-2 text-[11px] font-medium ${changed ? "bg-amber-100 text-amber-800" : "bg-gray-100 text-gray-500"}`}>
                         {changed ? `▲ ${T.changed}` : `= ${T.same}`}
                       </span>
                     )}
                   </th>
-                  <td className="border-t border-slate-200 p-2 align-top">{row.a}</td>
-                  <td className={`border-t border-slate-200 p-2 align-top ${changed ? "font-semibold" : ""}`}>{row.b}</td>
+                  <td className="border-t border-hair px-2 py-3 align-top text-ink">{row.a}</td>
+                  <td className={`border-t border-hair px-2 py-3 align-top text-ink ${changed ? "font-medium" : ""}`}>{row.b}</td>
                 </tr>
               );
             })}
@@ -234,7 +234,7 @@ function Decision({ r, T }: { r: Review; T: Text }) {
         <h2 className="text-lg font-bold">{T.preview}</h2>
         <div className="mt-2 grid gap-3 lg:grid-cols-2">
           {(["en", "ka"] as const).map((l) => (
-            <div key={l} className={`rounded-xl border-2 p-3 ${shareable.includes(l) ? "border-teal-600" : "border-dashed border-slate-300 opacity-60"}`} lang={l}>
+            <div key={l} className={`rounded-lg border p-4 ${shareable.includes(l) ? "border-edge border-l-[3px] border-l-teal-700" : "border-dashed border-gray-300 opacity-60"}`} lang={l}>
               <p className="text-xs font-bold uppercase text-slate-500">{l === "en" ? "English" : "ქართული"}</p>
               {shareable.includes(l) ? (
                 <>
@@ -291,7 +291,7 @@ function Outcome({ r, s, T }: { r: Review; s: DemoState; T: Text }) {
           {msg.answerCorrectedAt && <p className="mt-1 rounded bg-slate-100 p-2 text-sm">↺ {T.answerCorrectedNote} {formatDateTime(msg.answerCorrectedAt, lang)}.</p>}
           <div className="mt-2 grid gap-3 lg:grid-cols-2">
             {(["en", "ka"] as const).map((l) => (
-              <div key={l} className={`rounded-xl border-2 p-3 ${msg.texts[l] ? "border-emerald-600" : "border-dashed border-slate-300"}`} lang={l}>
+              <div key={l} className={`rounded-lg border p-4 ${msg.texts[l] ? "border-edge border-l-[3px] border-l-green-600" : "border-dashed border-gray-300"}`} lang={l}>
                 <p className="text-xs font-bold uppercase text-slate-500">{l === "en" ? "English" : "ქართული"}</p>
                 {msg.texts[l] ? <p className="mt-1 whitespace-pre-line text-[15px]">{msg.texts[l]}</p> : <p className="mt-1 text-sm">{T.willNotBeShared}</p>}
                 {msg.texts[l] && <p className="mt-2 rounded bg-slate-50 p-2 text-sm font-semibold">{FOLLOW_UP_TEXT[msg.followUp][l]}</p>}

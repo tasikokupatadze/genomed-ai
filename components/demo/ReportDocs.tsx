@@ -19,9 +19,9 @@ export function GeneticReportDoc({ lang, T }: { lang: Lang; T: Text }) {
     [T.reportSubmitter, r.source.name[lang]],
   ];
   return (
-    <article className="rounded-lg border border-slate-300 bg-[#fdfdfb] p-5 shadow-inner" aria-label={T.reportTitle}>
+    <article className="rounded-md border border-hair bg-[#FCFCFB] p-5" aria-label={T.reportTitle}>
       <p className="mb-3 rounded bg-violet-50 px-2 py-1 text-xs font-bold text-violet-800">{T.reportDemoWarning}</p>
-      <header className="flex flex-wrap items-baseline justify-between gap-2 border-b-2 border-slate-800 pb-2">
+      <header className="flex flex-wrap items-baseline justify-between gap-2 border-b border-gray-300 pb-2">
         <h3 className="text-lg font-bold">{T.reportTitle}</h3>
         <span className="text-sm text-slate-600">{r.lab[lang]} · <Mono>{r.id}</Mono></span>
       </header>
@@ -39,9 +39,9 @@ export function GeneticReportDoc({ lang, T }: { lang: Lang; T: Text }) {
 export function LabReportDoc({ lang, T }: { lang: Lang; T: Text }) {
   const r = LAB_REPORT;
   return (
-    <article className="rounded-lg border border-slate-300 bg-[#fdfdfb] p-5 shadow-inner" aria-label={T.labReportTitle}>
+    <article className="rounded-md border border-hair bg-[#FCFCFB] p-5" aria-label={T.labReportTitle}>
       <p className="mb-3 rounded bg-violet-50 px-2 py-1 text-xs font-bold text-violet-800">{T.demoBadge}: {T.fictional}</p>
-      <header className="flex flex-wrap items-baseline justify-between gap-2 border-b-2 border-slate-800 pb-2">
+      <header className="flex flex-wrap items-baseline justify-between gap-2 border-b border-gray-300 pb-2">
         <h3 className="text-lg font-bold">{T.labReportTitle}</h3>
         <span className="text-sm text-slate-600">{r.lab[lang]} · <Mono>{r.id}</Mono></span>
       </header>

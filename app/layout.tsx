@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
-import "@fontsource-variable/noto-sans";
+import "@fontsource-variable/inter";
+import "@fontsource-variable/jetbrains-mono";
 import "@fontsource-variable/noto-sans-georgian";
 import "./globals.css";
 

@@ -26,54 +26,58 @@ export default function DemoApp() {
 
   return (
     <div lang={s.lang} className="flex min-h-screen flex-col">
-      <header className="sticky top-0 z-20 border-b border-slate-200 bg-white/95 backdrop-blur">
-        <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-x-4 gap-y-2 px-4 py-2.5">
-          <div className="mr-auto min-w-0">
-            <p className="text-lg font-bold text-teal-800">{T.appName}</p>
-            <p className="hidden text-xs text-slate-600 md:block">{T.tagline}</p>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <span className="hidden rounded border border-dashed border-violet-400 bg-violet-50 px-1.5 py-0.5 text-[11px] font-bold uppercase text-violet-800 sm:inline">{T.roleLabel}</span>
-            <div role="group" aria-label={T.roleLabel} className="flex overflow-hidden rounded-lg border border-slate-300">
-              {roles.map((r) => (
-                <button
-                  key={r.id}
-                  onClick={() => dispatch({ type: "setRole", role: r.id })}
-                  aria-pressed={s.role === r.id}
-                  className={`px-3 py-1.5 text-sm font-semibold ${s.role === r.id ? "bg-slate-900 text-white" : "bg-white text-slate-800 hover:bg-slate-100"}`}
-                >
-                  {r.label}
-                  {r.id === "clinician" && pending > 0 && (
-                    <span className="ml-1.5 rounded-full bg-amber-400 px-1.5 text-xs font-bold text-amber-950" aria-label={`${pending} pending`}>{pending}</span>
-                  )}
-                </button>
-              ))}
+      <header className="sticky top-0 z-20 border-b border-hair bg-white">
+        <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-x-8 gap-y-1 px-4 sm:px-6">
+          <div className="flex min-h-14 items-center gap-2.5">
+            <span aria-hidden className="h-2.5 w-2.5 rounded-[2px] bg-teal-700" />
+            <div>
+              <p className="text-[15px] font-semibold tracking-tight text-ink">{T.appName}</p>
+              <p className="hidden text-[11.5px] text-gray-500 xl:block">{T.tagline}</p>
             </div>
           </div>
 
-          <div role="group" aria-label={T.language} className="flex overflow-hidden rounded-lg border border-slate-300">
-            {(["ka", "en"] as Lang[]).map((l) => (
+          <nav role="group" aria-label={T.roleLabel} className="order-3 flex w-full items-stretch gap-6 sm:order-none sm:w-auto">
+            <span className="hidden self-center rounded-full bg-gray-100 px-2 py-0.5 text-[11px] font-medium text-gray-600 lg:inline">{T.roleLabel}</span>
+            {roles.map((r) => (
               <button
-                key={l}
-                onClick={() => dispatch({ type: "setLang", lang: l })}
-                aria-pressed={s.lang === l}
-                lang={l}
-                className={`px-2.5 py-1.5 text-sm font-semibold ${s.lang === l ? "bg-teal-700 text-white" : "bg-white text-slate-800 hover:bg-slate-100"}`}
-              >{l === "ka" ? "ქართ" : "EN"}</button>
+                key={r.id}
+                onClick={() => dispatch({ type: "setRole", role: r.id })}
+                aria-pressed={s.role === r.id}
+                className={`flex min-h-12 items-center border-b-2 text-sm font-medium transition sm:min-h-14 ${s.role === r.id ? "border-teal-700 text-ink" : "border-transparent text-gray-500 hover:text-ink"}`}
+              >
+                {r.label}
+                {r.id === "clinician" && pending > 0 && (
+                  <span className="ml-1.5 rounded-full bg-amber-100 px-1.5 text-xs font-semibold text-amber-800" aria-label={`${pending} pending`}>{pending}</span>
+                )}
+              </button>
             ))}
-          </div>
+          </nav>
 
-          <button
-            onClick={() => setControlsOpen((v) => !v)}
-            aria-expanded={controlsOpen}
-            aria-controls="demo-controls"
-            className="rounded-lg border-2 border-dashed border-violet-500 bg-violet-50 px-2.5 py-1 text-sm font-bold text-violet-900 lg:hidden"
-          >⚙ {controlsOpen ? T.hideControls : T.showControls}</button>
+          <div className="ml-auto flex items-center gap-3">
+            <div role="group" aria-label={T.language} className="flex items-center gap-1 text-[13px]">
+              {(["ka", "en"] as Lang[]).map((l, i) => (
+                <span key={l} className="flex items-center gap-1">
+                  {i > 0 && <span aria-hidden className="text-gray-300">·</span>}
+                  <button
+                    onClick={() => dispatch({ type: "setLang", lang: l })}
+                    aria-pressed={s.lang === l}
+                    lang={l}
+                    className={`rounded px-1.5 py-1 ${s.lang === l ? "font-semibold text-ink" : "text-gray-500 hover:text-ink"}`}
+                  >{l === "ka" ? "ქართ" : "EN"}</button>
+                </span>
+              ))}
+            </div>
+            <button
+              onClick={() => setControlsOpen((v) => !v)}
+              aria-expanded={controlsOpen}
+              aria-controls="demo-controls"
+              className="rounded-md border border-dashed border-violet-400 bg-violet-50 px-2.5 py-1 text-[13px] font-medium text-violet-800 lg:hidden"
+            >{controlsOpen ? T.hideControls : T.showControls}</button>
+          </div>
         </div>
       </header>
 
-      <div className="mx-auto grid w-full max-w-7xl flex-1 gap-5 px-4 py-5 lg:grid-cols-[minmax(0,1fr)_330px]">
+      <div className="mx-auto grid w-full max-w-7xl flex-1 gap-6 px-4 py-7 sm:px-6 lg:grid-cols-[minmax(0,1fr)_320px]">
         <aside id="demo-controls" aria-label={T.demoControls}
           className={`${controlsOpen ? "block" : "hidden"} lg:order-2 lg:block`}>
           <div className="lg:sticky lg:top-20"><DemoControls s={s} T={T} /></div>
@@ -85,8 +89,8 @@ export default function DemoApp() {
         </main>
       </div>
 
-      <footer className="border-t border-amber-200 bg-amber-50">
-        <p className="mx-auto max-w-7xl px-4 py-3 text-center text-sm font-medium text-amber-950">{T.footer}</p>
+      <footer className="border-t border-hair bg-white">
+        <p className="mx-auto max-w-7xl px-4 py-4 text-center text-[13px] text-gray-500 sm:px-6">{T.footer}</p>
       </footer>
     </div>
   );

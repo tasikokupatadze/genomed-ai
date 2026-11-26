@@ -20,7 +20,7 @@ function MessageCard({ m, lang, T }: { m: PublishedMessage; lang: Lang; T: Text 
   const shown = text ?? m.texts[otherLang] ?? "";
   const update = m.basedOn.updateId ? EVIDENCE_UPDATES.find((u) => u.id === m.basedOn.updateId) : null;
   return (
-    <article className="rounded-xl border-2 border-teal-600 bg-teal-50/40 p-4">
+    <article className="rounded-lg border border-edge border-l-[3px] border-l-teal-700 bg-white p-5">
       <p className="text-sm font-semibold text-teal-900">
         {T.sharedOn} {formatDate(m.sharedAt, lang)}
       </p>
@@ -38,7 +38,7 @@ function MessageCard({ m, lang, T }: { m: PublishedMessage; lang: Lang; T: Text 
           <ClassBadge code={normalizeClassification(update.classification)} lang={lang} />
         </p>
       )}
-      <div className="mt-3 rounded-lg bg-white p-3">
+      <div className="mt-3 rounded-md bg-canvas p-3">
         <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">{T.clinicianRecommendation}</p>
         <p className="mt-0.5 font-semibold">{FOLLOW_UP_TEXT[m.followUp][lang]}</p>
       </div>
@@ -76,7 +76,7 @@ function GeneticCase({ s, T }: { s: DemoState; T: Text }) {
           <Fact label={T.variant}><Mono>{r.variant.id}</Mono><br /><span className="text-sm text-slate-600"><Mono>{r.variant.hgvs}</Mono></span></Fact>
           <Fact label={T.condition}>{r.condition.name[lang]}<br /><span className="text-sm text-slate-600"><Mono>{r.condition.id}</Mono></span></Fact>
         </dl>
-        <div className="mt-4 rounded-xl bg-sky-50 p-4">
+        <div className="mt-5 rounded-md bg-canvas p-4">
           <h2 className="font-bold">{T.whatItMeans}</h2>
           <p className="mt-1 text-[17px] leading-relaxed">{T.vusExplanation}</p>
           <p className="mt-1 text-slate-700">{T.vusNotDiagnosis}</p>
@@ -141,10 +141,10 @@ function ThyroidCase({ s, T }: { s: DemoState; T: Text }) {
         </div>
         <p className="mt-1 text-sm text-slate-600">{PATIENTS[lab.patientId].name[lang]} · {T.drawDate}: <b>{formatDate(lab.drawDate, lang)}</b></p>
         {lab.results.map((x) => (
-          <div key={x.test} className="mt-4 flex flex-wrap items-center gap-3 rounded-xl border border-red-200 bg-red-50 p-4">
+          <div key={x.test} className="mt-4 flex flex-wrap items-center gap-3 rounded-md bg-red-50 p-4">
             <span className="text-xs font-semibold uppercase tracking-wide text-red-900">{T.flaggedResult}</span>
             <span className="text-lg font-bold"><Mono>{x.test}</Mono> {x.value} {x.unit}</span>
-            <span className="rounded border border-red-300 bg-white px-2 py-0.5 text-sm font-bold text-red-900">
+            <span className="rounded-full bg-white px-2.5 py-0.5 text-sm font-semibold text-red-800">
               {x.flag === "L" ? "↓" : "↑"} {x.flag} · {x.flag === "L" ? T.flagL : T.flagH}
             </span>
             <span className="text-sm text-slate-700">{T.refRange}: {x.refLow}–{x.refHigh} {x.unit}</span>
@@ -156,13 +156,13 @@ function ThyroidCase({ s, T }: { s: DemoState; T: Text }) {
         </ul>
       </section>
 
-      <section className={`${card} border-2 border-teal-600`} aria-labelledby="q-title">
+      <section className={`${card} border-l-[3px] border-l-teal-700`} aria-labelledby="q-title">
         <h2 id="q-title" className="text-sm font-semibold uppercase tracking-wide text-teal-800">{T.oneQuestion}</h2>
         <p className="mt-1 text-xl font-bold leading-snug">{T.biotinQuestion}</p>
         <p className="mt-1 text-slate-700">{T.biotinWhy}</p>
 
         {current && !changing && (
-          <div className="mt-4 rounded-xl bg-slate-50 p-4">
+          <div className="mt-4 rounded-lg bg-slate-50 p-4">
             <p className="text-sm text-slate-600">{T.yourAnswer} ({formatDateTime(current.recordedAt, lang)})</p>
             <p className="text-lg font-bold">{BIOTIN_ANSWER[current.answer][lang]}</p>
             <p className="mt-2 leading-relaxed">{BIOTIN_CONSEQUENCE[current.answer][lang]}</p>
