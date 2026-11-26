@@ -15,6 +15,7 @@ export async function POST(req: Request, ctx: RouteContext<"/api/patients/[id]/e
   const card: EmergencyCard = {
     enabled: p.emergency?.enabled ?? false,
     token: p.emergency?.token ?? null,
+    short_code: p.emergency?.short_code ?? null,
     display_name: str(b.display_name, 60),
     conditions: list(b.conditions),
     instructions: { en: str(instr.en, 1500) || undefined, ka: str(instr.ka, 1500) || undefined },

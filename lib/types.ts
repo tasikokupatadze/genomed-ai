@@ -146,6 +146,8 @@ export interface Patient {
 export interface EmergencyCard {
   enabled: boolean;
   token: string | null;
+  /** 6 capitals/digits for the compact bracelet QR (/B/<code> redirects to /e/<token>). */
+  short_code?: string | null;
   display_name: string;            // e.g. first name only
   conditions: string[];
   instructions: Partial<Record<Lang, string>>; // "If you see me…", written by the patient

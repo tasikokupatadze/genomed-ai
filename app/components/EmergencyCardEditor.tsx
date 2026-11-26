@@ -10,8 +10,19 @@ const btn = "min-h-11 rounded-lg px-4 py-2 text-sm font-semibold disabled:opacit
 const primary = `${btn} bg-teal-700 text-white hover:bg-teal-800`;
 const secondary = `${btn} border border-slate-300 bg-white hover:bg-slate-50`;
 const lines = (s: string) => s.split("\n").map((x) => x.trim()).filter(Boolean);
-// "Q" error correction survives some scratching or a curved bracelet surface.
-const QR_OPTS = { errorCorrectionLevel: "Q" as const, margin: 2 };
+// Version 2 = 25x25 squares. "M" error correction keeps ~15% damage tolerance and still
+// fits HTTPS://<domain>/B/<CODE> in capitals (capitals let the QR use its compact mode).
+const V2 = { version: 2, errorCorrectionLevel: "M" as const, margin: 2 };
+const FALLBACK = { errorCorrectionLevel: "M" as const, margin: 2 };
+
+/** Smallest options that hold the text: version 2 when it fits, else the next size up. */
+function qrOptions(text: string): { opts: typeof FALLBACK & { version?: number }; version: number } {
+  try {
+    return { opts: V2, version: QRCode.create(text, V2).version };
+  } catch {
+    return { opts: FALLBACK, version: QRCode.create(text, FALLBACK).version };
+  }
+}
 
 export default function EmergencyCardEditor({ patient, d }: { patient: Patient; d: Dict }) {
   const router = useRouter();
@@ -31,11 +42,14 @@ export default function EmergencyCardEditor({ patient, d }: { patient: Patient; 
   const origin = useSyncExternalStore(() => () => {}, () => window.location.origin, () => "");
   const base = `/api/patients/${patient.id}/emergency`;
   const url = e?.token && origin ? `${origin}/e/${e.token}` : "";
+  // What the bracelet QR holds: the short link in capitals when there is a short code.
+  const qrText = e?.short_code && origin ? `${origin}/B/${e.short_code}`.toUpperCase() : url;
+  const qr = qrText ? qrOptions(qrText) : null;
 
   useEffect(() => {
-    if (!url) return;
-    QRCode.toString(url, { ...QR_OPTS, type: "svg" }).then(setSvg);
-  }, [url]);
+    if (!qrText) return;
+    QRCode.toString(qrText, { ...qrOptions(qrText).opts, type: "svg" }).then(setSvg);
+  }, [qrText]);
 
   async function save() {
     const r = await fetch(base, {
@@ -58,13 +72,14 @@ export default function EmergencyCardEditor({ patient, d }: { patient: Patient; 
   function download(name: string, href: string) {
     const a = document.createElement("a"); a.href = href; a.download = name; a.click();
   }
-  async function downloadPng() { download("genomed-bracelet-qr.png", await QRCode.toDataURL(url, { ...QR_OPTS, width: 1024 })); }
+  // 21 mm at 600 dpi = 496 px; the PNG is a little larger so it stays sharp when scaled.
+  async function downloadPng() { download("genomed-bracelet-qr.png", await QRCode.toDataURL(qrText, { ...qr!.opts, width: 1024 })); }
   function downloadSvg() { download("genomed-bracelet-qr.svg", URL.createObjectURL(new Blob([svg], { type: "image/svg+xml" }))); }
   function print() {
     const w = window.open("", "_blank", "width=480,height=640");
     if (!w) return;
     w.document.write(`<!doctype html><meta charset="utf-8"><title>QR</title>
-      <style>body{font-family:sans-serif;text-align:center;margin:12mm}.qr{width:30mm;height:30mm;margin:0 auto}
+      <style>body{font-family:sans-serif;text-align:center;margin:12mm}.qr{width:21mm;height:21mm;margin:0 auto}
       .qr svg{width:100%;height:100%}p{margin:2mm 0;font-size:9pt}</style>
       <div class="qr">${svg}</div><p><b>${d.qrScanLabel}</b></p><p>☎ 112</p>`);
     w.document.close(); w.focus(); w.print();
@@ -131,7 +146,12 @@ export default function EmergencyCardEditor({ patient, d }: { patient: Patient; 
             <div className={`w-44 rounded-lg border border-slate-200 bg-white p-1 ${e.enabled ? "" : "opacity-40"}`}
               role="img" aria-label={`QR: ${url}`} dangerouslySetInnerHTML={{ __html: svg }} />
             <div className="min-w-0 flex-1 space-y-2">
-              <p className="break-all font-mono text-xs text-slate-600">{url}</p>
+              <p className="break-all font-mono text-xs text-slate-600">{qrText}</p>
+              {qr && (
+                <p className={`text-xs font-semibold ${qr.version === 2 ? "text-emerald-800" : "text-amber-800"}`}>
+                  {qr.version === 2 ? `✓ ${d.qrV2}` : `⚠ ${d.qrBigger.replace("{n}", String(qr.version)).replace("{s}", String(17 + 4 * qr.version))}`}
+                </p>
+              )}
               <div className="flex flex-wrap gap-2">
                 <button className={secondary} onClick={downloadPng} disabled={!svg}>⬇ {d.downloadPng}</button>
                 <button className={secondary} onClick={downloadSvg} disabled={!svg}>⬇ {d.downloadSvg}</button>

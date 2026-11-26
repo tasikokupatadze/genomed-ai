@@ -57,3 +57,10 @@ export function getEmergencyCard(token: string) {
   const p = listPatients().find((x) => x.emergency?.enabled && x.emergency.token === token);
   return p?.emergency ?? null;
 }
+
+/** Bracelet short link: /B/<CODE> -> the card's full emergency page. */
+export function getEmergencyByShortCode(code: string) {
+  const c = code.trim().toUpperCase();
+  if (!/^[A-Z0-9]{6}$/.test(c)) return null;
+  return listPatients().find((x) => x.emergency?.enabled && x.emergency.short_code === c)?.emergency ?? null;
+}
