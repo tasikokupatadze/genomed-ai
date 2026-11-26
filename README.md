@@ -1,97 +1,84 @@
 # GenoMed AI
 
-A doctor-and-patient website that explains medical results in plain language (English and Georgian).
-It checks a patient's medications, allergies, blood tests and genetic results against curated tables.
-Everything the patient sees is approved by a doctor first.
+**Future of Care: Reinventing Healthcare** · Alte University hackathon prototype (Tbilisi)
 
-> **Decision support only. Not a diagnosis.** All patients in `data/demo_patients.json` are fictional.
+> *“If the science changes, who will tell me?”*
 
-## Run locally
+GenoMed helps doctors answer two questions:
+**What context are we missing today? Has anything changed since we last explained this result to the patient?**
+The patient receives a doctor-approved explanation in **Georgian or English**.
+
+All patients, the gene symbol `GNMD1`, variants, conditions, classifications, submitters and evidence updates are **fictional demo data** and are labelled as such on screen.
+
+## Start it
+
+Needs Node.js 20 or newer. No API keys, GPU, database or internet service is needed for the demo.
 
 ```bash
 npm install
-cp .env.example .env.local   # add ANTHROPIC_API_KEY
-npm run dev                  # http://localhost:3000
+npm run dev
 ```
 
-Without an API key everything works except the AI draft: the doctor can still write and approve summaries by hand.
+Open http://localhost:3000. The app starts on the patient's original genetic report.
 
-## Deploy to Vercel
+Production build:
 
-1. Import this GitHub repo on vercel.com (Add New → Project). No build settings to change.
-2. Project → Settings → Environment Variables: add `ANTHROPIC_API_KEY`.
-3. Deploy.
+```bash
+npm run build
+npm run start
+```
 
-Edits made on the live site (new labs, approvals) are kept in `/tmp` on the server, so they reset
-when Vercel restarts the server. That is fine for a demo; use "Reset demo data" to start clean.
+Logic tests (matching, supplement rule, duplicates, approvals, corrections):
 
-## How it works
+```bash
+npm test
+```
 
-| Area | Where |
+Deploying to Vercel: import the GitHub repo, then click Deploy. No environment variables are needed for the demo.
+
+## 90-second demo script
+
+1. **(0:00) Patient view.** "Nino got a genetic report in March: *variant of uncertain significance*. GenoMed explains it plainly and tells her exactly what we keep tracking: this variant, this condition." Click **ქართ** to show Georgian, then back.
+2. **(0:15) Demo controls, the misleading update.** Click **1 · Same gene and condition, different variant**. "Same gene, but the matching engine compares the variant ID and the condition ID, not just the gene name. Different variant, so no review." Click **2 · Same variant, different condition** for the same result.
+3. **(0:30) The genuine change.** Click **4 · Same variant and condition, changed interpretation**. "Now the variant and condition match and the classification changed, so a review opens." Click it again: "Already processed: no duplicates."
+4. **(0:40) Clinician.** Click **Open the review**. "Original and new evidence side by side, with dates and sources. Only the classification is highlighted." Choose **Recommend follow-up**, edit the English text, and point out that Georgian is now marked *will not be shared*, because an old translation must not pass as a translation of the edit. **Approve and share**.
+5. **(1:00) Patient.** Switch to **Patient**: a dated message saying what changed and the doctor's recommendation, exactly as approved. The original report and its history are still there.
+6. **(1:10) Second case.** In demo controls choose **Davit · thyroid test**. A flagged TSH and one question: *"Were you taking a supplement containing biotin when this blood sample was collected?"* Answer **I started after the blood draw**: "timing rules it out for this sample." Change to **Yes, before the blood draw**: "now the doctor gets a review, with the American Thyroid Association source, to check whether the testing method is susceptible."
+7. **(1:25) Research tab.** "Our Evo 2 study is planned, not run. We show no invented scores." Use **Reset demo** before the next judge.
+
+## What is real, what is simulated, what is planned
+
+| | Status |
 |---|---|
-| Doctor area (laptop) | `/doctor`, `/doctor/[id]`: profile, add entries, findings with sources, draft → edit → approve |
-| Patient area (phone) | `/patient/[id]`: only doctor-approved summary, medication notes and questions |
-| Checks (table lookups) | `lib/checks/labs.ts`, `allergies.ts`, `pgx.ts`, `variants.ts` |
-| LLM rewrite | `lib/explain.ts`, prompt in `prompts/system.md`, input built in `lib/analyze.ts` |
-| Patient-text rules | `lib/checkOutput.ts` (English + Georgian). Runs on every AI draft (retry once, then withheld) and on approval |
-| UI text | `lib/translations.ts` |
+| Matching new evidence to a saved finding (normalised variant ID + condition ID + classification), duplicate blocking, clinician review, edit, approve or dismiss, patient messages, history | **Working** (`lib/demo/`) |
+| Supplement timing rule, answer corrections that withdraw stale flags and mark earlier messages as corrected | **Working** (`lib/demo/biotin.ts`, `lib/demo/state.ts`) |
+| English/Georgian UI and seeded bilingual drafts | **Working.** Georgian should still be reviewed by a native speaker |
+| The four evidence updates, both patients, the genetic report and the lab report | **Simulated**: fictional fixtures in `lib/demo/fixtures.ts`. A real system would receive updates from clinical databases such as ClinVar |
+| Saving demo state | **Demo only**: browser `localStorage`, key `genomed-demo-v1`. Role switching has no login |
+| Evo 2 agreement study | **Planned**: benchmark not yet run, no scores exist |
 
-### API
+Research predictions never trigger patient notifications or change a clinical classification.
 
-- `GET /api/patients/[id]`
-- `POST /api/patients/[id]/labs`, `/medications` (returns allergy flags), `/allergies`, `/genetics` (extra: PGx result or BRCA1 variant)
-- `POST /api/analyze/[id]` `{ "lang": "en" | "ka" }`: findings, template medication notes, AI draft, check results
-- `POST /api/approve/[id]` `{ lang, patient_summary, patient_questions }`: refused (422) if the text breaks the rules
-- `POST /api/reset`: restore demo data
+## Sources
 
-## Data (`/data`)
+- **Biotin and thyroid tests (medical explanation):** American Thyroid Association, *“Biotin use can interfere with the management of thyroid diseases, including thyroid cancer”*, Clinical Thyroidology for the Public, Vol. 15, Issue 1 (January 2022). https://www.thyroid.org/patient-thyroid-information/ct-for-patients/january-2022/vol-15-issue-1-p-7-8/
+- **Model (planned research):** Arc Institute, Evo 2. https://arcinstitute.org/tools/evo
 
-| File | What | Status |
-|---|---|---|
-| `drug_lab_effects.csv` | Medication → lab effects. Seeded only with the brief's examples | **TODO: source_url, reviewed_by** |
-| `drug_classes.csv` | Drug name → class, so "atorvastatin" matches "statin" rows | TODO: review |
-| `allergy_classes.csv` | Penicillins demo; `cross_reactive_classes` is empty on purpose | **TODO: sources** |
-| `pgx.csv` | 4 CPIC-based examples from the brief | **TODO: CPIC links + guideline_summary** |
-| `lab_tests.csv` | Canonical lab names + aliases | |
-| `brca1_clinvar.csv` | 15,480 BRCA1 variants, GRCh37, built from ClinVar by `pipeline/build_clinvar.py` | Real ClinVar data |
-| `scores.csv` | Evo 2 scores (empty until the pipeline runs) | |
-| `evo2_bands.json` | Band thresholds (null until calibrated → app shows "AI estimate unavailable") | |
-| `context_facts.json` | Approved plain-language facts the LLM may use | **TODO: clinical + Georgian review** |
+## Code map
 
-**Rule:** add a table row only when you have a source. Never invent drug–lab links, guideline text or scores.
-Run `python pipeline/validate.py` to check the tables and list every open TODO.
+| File | What it does |
+|---|---|
+| `lib/demo/types.ts` | Original reports, evidence updates, reviews and published messages are separate types with stable IDs, statuses and dates |
+| `lib/demo/matching.ts` | `matchUpdate()`: does new evidence concern the same variant and condition, and did the classification change? |
+| `lib/demo/normalize.ts` | Normalises IDs (`syn var 000117` → `SYN-VAR-000117`) and classifications (`VUS` = `Uncertain significance`) |
+| `lib/demo/biotin.ts` | Supplement timing rule for one blood sample |
+| `lib/demo/state.ts` | Every state change (process update, edit, approve, dismiss, answer, reset) as one pure function |
+| `lib/demo/i18n.ts` | All English and Georgian text, side by side |
+| `lib/demo/fixtures.ts` | Fictional patients, reports, the four updates, seeded drafts |
+| `components/demo/` | Patient, Clinician and Research views, report viewer, demo controls |
 
-Reference ranges always come from the patient's own lab report (`ref_low`, `ref_high`); none are hard-coded.
-Allergies are never inferred from blood tests.
+Dates are kept apart: **report date** (lab issued the report), **evidence date** (the update was published), **sample date** (blood draw), **shared date** (doctor sent the message).
 
-## Offline pipeline (`/pipeline`, Python)
+## Broader vision
 
-```bash
-pip install numpy requests
-python pipeline/build_clinvar.py            # refresh data/brca1_clinvar.csv from NCBI
-python pipeline/validate.py                 # table checks + TODO list
-```
-
-Evo 2 scoring (research-grade, clinician view only):
-
-```bash
-export NVIDIA_API_KEY=...
-curl -O https://hgdownload.soe.ucsc.edu/goldenPath/hg19/chromosomes/chr17.fa.gz
-python pipeline/score_variants.py --fasta chr17.fa.gz --probe      # ONE test call: verifies the response format
-python pipeline/score_variants.py --fasta chr17.fa.gz --hgvs c.68_69del c.4402A>G
-python pipeline/score_variants.py --fasta chr17.fa.gz --classes Pathogenic Benign "Likely benign" "Likely pathogenic" --snv-only --limit 200
-python pipeline/validate.py --calibrate                             # proposes band thresholds
-python pipeline/validate.py --calibrate --write-bands --by "Dr. Name"
-```
-
-The NVIDIA endpoint URL, the logits layer name (`--layer`, default `unembed`) and the response format
-are **not yet verified**. `--probe` saves the raw response, decodes it, and checks the model's
-next-base predictions against the sequence. Batch scoring refuses to run until the probe passes.
-A failed score stays empty.
-
-## Known limits
-
-- **No temperature setting:** current Claude models reject `temperature`. Output is constrained instead by a
-  JSON schema, the prompt, and the `checkOutput` rules.
-- Georgian UI text, context facts and rule keywords need native-speaker review.
-- Table contents (drug effects, condition names) are shown in English in both languages.
+GenoMed could later connect medical history, medications, supplements, allergies, lab results and pharmacogenomic findings. An earlier server-side prototype of these table-based checks is still in this repo at **`/doctor`** (`app/(tools)/`, `lib/checks/`, `data/`). It includes a real ClinVar BRCA1 table and an optional LLM draft that needs `ANTHROPIC_API_KEY`. The offline Evo 2 scoring and validation scripts are in `pipeline/` (see `pipeline/score_variants.py`; nothing has been scored yet). None of this is needed for the hackathon demo.

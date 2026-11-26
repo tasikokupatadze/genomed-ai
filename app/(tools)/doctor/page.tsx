@@ -3,7 +3,7 @@ import { getLang } from "@/lib/i18n";
 import { t } from "@/lib/translations";
 import { listPatients } from "@/lib/store";
 import { runChecks } from "@/lib/analyze";
-import ResetButton from "../components/ResetButton";
+import ResetButton from "@/app/components/ResetButton";
 
 export const dynamic = "force-dynamic";
 
