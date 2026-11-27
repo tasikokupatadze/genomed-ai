@@ -1,7 +1,9 @@
 # Bracelet tag (3D print)
 
-A 44 × 32 × 2.4 mm tag with the bracelet QR raised 0.6 mm on the front, two slots for a
-20–22 mm watch strap, and "IN AN EMERGENCY / SCAN THE QR / CALL 112" engraved on the back.
+A 26 × 27 × 2.4 mm tag (3.0 mm with the raised QR). The QR is 24 × 24 mm, raised 0.6 mm,
+with a 1 mm white plate edge around it. "IN AN EMERGENCY / SCAN THE QR / CALL 112" is engraved
+on the back. There are no strap slots: set it into a bracelet holder or glue it on.
+If it sits on a dark band, keep the white edge visible, because the QR needs light space around it.
 The QR opens `https://genomed-ai-jade.vercel.app/B/NINO26` (the fictional demo patient).
 
 ![preview](preview.png)
@@ -20,7 +22,7 @@ The QR only scans with **dark squares on a light plate**:
   object, white for the base and black for the QR.
 
 0.4 mm nozzle, 0.12–0.16 mm layers, PLA or PETG, no supports, flat on the bed.
-Each QR square is 0.82 mm. Scan it with a phone before using it.
+Each QR square is 0.83 mm. Scan it with a phone before using it.
 
 ## Another patient or domain
 ```

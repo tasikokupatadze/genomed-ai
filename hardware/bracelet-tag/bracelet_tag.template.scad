@@ -14,16 +14,13 @@
 part = "all";          // "all", "base" or "qr"
 
 // ---- size (mm) ----
-qr_mm      = 27;       // printed width of the QR including its white border
-quiet      = 2;        // white border around the code, in QR squares (QR needs ≥ 2 here)
-plate_w    = 44;       // tag width (strap runs through the side slots)
-plate_h    = 32;       // tag height
+qr_mm      = 24;       // printed width of the QR squares (the plate edge is the white border)
+quiet      = 0;        // extra white border inside qr_mm, in QR squares
+plate_w    = 26;       // tag width
+plate_h    = 27;       // tag height
 plate_t    = 2.4;      // plate thickness
-corner_r   = 4;        // rounded corners
+corner_r   = 2.5;      // rounded corners
 dot_h      = 0.6;      // how far the dark squares stand up
-slot_w     = 2.6;      // strap slot width
-slot_len   = 24;       // strap slot length (fits a 20–22 mm watch strap)
-slot_x     = 18.6;     // slot centre distance from the middle
 back_text  = ["IN AN EMERGENCY", "SCAN THE QR", "CALL 112"];
 text_depth = 0.4;      // engraved on the back
 
@@ -42,24 +39,17 @@ module rounded_plate() {
       square([plate_w, plate_h], center = true);
 }
 
-module slots() {
-  for (sx = [-slot_x, slot_x])
-    translate([sx, 0, -1])
-      linear_extrude(plate_t + 2)
-        hull() for (sy = [-1, 1]) translate([0, sy * (slot_len - slot_w) / 2]) circle(d = slot_w, $fn = 32);
-}
-
 module back_engraving() {
   translate([0, 0, -0.01]) linear_extrude(text_depth + 0.01)
     mirror([1, 0, 0])   // mirrored so it reads correctly when you turn the tag over
       for (i = [0 : len(back_text) - 1])
-        translate([0, (len(back_text) - 1) / 2 * 4.4 - i * 4.4])
-          text(back_text[i], size = 2.6, halign = "center", valign = "center",
+        translate([0, (len(back_text) - 1) / 2 * 3.6 - i * 3.6])
+          text(back_text[i], size = 2.0, halign = "center", valign = "center",
                font = "Liberation Sans:style=Bold");
 }
 
 module base() {
-  difference() { rounded_plate(); slots(); back_engraving(); }
+  difference() { rounded_plate(); back_engraving(); }
 }
 
 // Dark squares, merged into horizontal runs so the mesh stays small and clean.
